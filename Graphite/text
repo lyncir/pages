@@ -1,0 +1,5 @@
+= Graphite监控
+
+Graphite做两件事:
+ * 存储数据
+ * 按需绘图

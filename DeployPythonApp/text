@@ -1,0 +1,128 @@
+= 部署Python应用
+
+== uWSGI
+
+=== 语法
+
+<<code bash>>
+$ uwsgi [options...]
+<</code>>
+
+ * ##--http :9090## 测试方便
+ * ##--socket /tmp/uwsgi.sock## 能用socket,尽量用socket
+
+=== uwsgi示例脚本
+
+<<code bash>>
+$ cat /etc/init.d/uwsgi
+#!/bin/bash
+
+UWSGI_SOCK="/tmp/uwsgi.sock"
+UWSGI_PATH="/var/www/blog"
+UWSGI_MODULE="app"
+UWSGI_PROS=6
+UWSGI_LOG="/var/log/uwsgi.log"
+UWSGI_OPTS="-s $UWSGI_SOCK --pythonpath $UWSGI_PATH --module $UWSGI_MODULE:app --processes $UWSGI_PROS -d $UWSGI_LOG"
+
+/usr/bin/uwsgi_python27 $UWSGI_OPTS
+<</code>>
+
+=== nginx代理设置
+
+<<code bash>>
+$ more /etc/nginx/nginx.conf
+    server {
+        listen 80;
+        server_name lyncir.com;
+
+        access_log /var/log/nginx/blog.access_log main;
+        error_log /var/log/nginx/blog.error_log info;
+
+        location / { try_files $uri @blog; }
+        location @blog {
+            include uwsgi_params;
+            uwsgi_pass unix:/tmp/uwsgi.sock;
+        }
+    }
+<</code>>
+
+=== 重载uwsgi
+
+启动##uwsgi##时,增加##--pid##参数
+
+<<code bash>>
+uwsgi [options] --pidfile=/tmp/project-master.pid
+# using kill to send the signal
+kill -HUP `cat /tmp/project-master.pid`
+# or the convenience option --reload
+uwsgi --reload /tmp/project-master.pid
+<</code>>
+
+== Gunicorn
+
+=== 基础使用:
+<<code bash>>
+$ gunicorn [OPTIONS] APP_MODULE
+<</code>>
+
+##APP_MODULE## 的模式是 ##$(MODULE_NAME):$(VARIABLE_NAME)##
+>##MODULE_NAME## 为模块名
+>>eg: flaskapp.py的 ##MODULE_NAME## 为flaskapp
+>##VARIABLE_NAME## 为WSGI调用应该被指定的模块
+>>eg: <<code python>>app = Flask(__name__)<</code>> 的 ##VARIABLE_NAME## 为app
+>>eg: <<code python>>application = tornado.web.Application([(r"/", MainHandler),])<</code>> 的 ##VARIABLE_NAME## 为application
+
+=== Gunicorn启动脚本
+<<code bash>>
+$ cat /etc/sv/blog/run
+#!/bin/bash
+
+GUNICORN=/usr/bin/gunicorn
+ROOT=/var/www/blog
+PID=/var/run/gunicorn.pid
+
+APP=app:app
+
+if [ -f $PID ]; then rm $PID; fi
+
+cd $ROOT
+exec $GUNICORN -c $ROOT/gunicorn.conf.py --pid=$PID $APP &
+<</code>>
+
+=== 应用配置 gunicorn.conf.py
+
+<<code bash>>
+$ cat /var/www/blog/gunicorn.conf.py
+# -*- coding: utf8 -*-
+# for blog
+
+bind = "127.0.0.1:5000"
+accesslog = "/var/log/blog-access.log"
+errorlog = "/var/log/blog-error.log"
+<</code>>
+
+=== nginx代理设置
+
+<<code bash>>
+$ more /etc/nginx/nginx.conf
+    server {
+        listen 80;
+        server_name lyncir.com;
+
+        access_log /var/log/nginx/blog.access_log main;
+        error_log /var/log/nginx/blog.error_log info;
+
+        location / {
+            proxy_pass http://127.0.0.1:5000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+<</code>>
+
+=== 重载Gunicorn
+
+<<code bash>>
+$ kill -HUP masterpid
+<</code>>

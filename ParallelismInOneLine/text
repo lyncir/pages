@@ -1,0 +1,120 @@
+= Python并行任务技巧
+
+== 示例
+
+=== 标准线程多进程，生产者/消费者示例：
+
+**Worker越多,问题越大**
+
+<<code python>>
+# -*- coding: utf8 -*-
+
+import os
+import time
+import Queue
+import threading
+from PIL import Image
+
+def create_thumbnail(filename, size=(128, 128)):
+    try:
+        fp, fmt = filename.rsplit('.', 1)
+        im = Image.open(filename)
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save((fp + '_'+'x'.join(str(i) for i in size) + '.'+fmt), im.format)
+        return '%s thumbnail success!' % filename
+    except Exception:
+        return '%s thumbnail failed!' % filename
+
+
+def get_image_paths(folder):
+    return [os.path.join(folder, f) for f in os.listdir(folder) if 'png' in f]
+
+
+class Consumer(threading.Thread):
+    def __init__(self, queue):
+        threading.Thread.__init__(self)
+        self._queue = queue
+
+    def run(self):
+        while True:
+            content = self._queue.get()
+            if isinstance(content, str) and content == 'quit':
+                break
+            respone = create_thumbnail(content)
+        print 'Bye bye!'
+
+
+def Producer():
+    filenames = get_image_paths('images')
+    queue = Queue.Queue()
+    worker_threads = build_worker_pool(queue, 4)
+    start_time = time.time()
+
+    for filename in filenames:
+        queue.put(filename)
+    for worker in worker_threads:
+        queue.put('quit')
+    for worker in worker_threads:
+        worker.join()
+
+    print time.time() - start_time
+
+
+def build_worker_pool(queue, size):
+    workers = []
+    for _ in range(size):
+        worker = Consumer(queue)
+        worker.start()
+        workers.append(worker)
+    return workers
+
+
+if __name__ == '__main__':
+    Producer()
+<</code>>
+
+
+=== map
+
+Map能够处理集合按顺序遍历，最终将调用产生的结果保存在一个简单的集合当中。
+
+{{ParallelismInOneLine/uploads/map.png|map.png}}
+
+<<code python>>
+# -*- coding: utf8 -*-
+
+import os
+import time
+from multiprocessing import Pool
+from PIL import Image
+
+def create_thumbnail(filename, size=(128, 128)):
+    try:
+        fp, fmt = filename.rsplit('.', 1)
+        im = Image.open(filename)
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save((fp + '_'+'x'.join(str(i) for i in size) + '.'+fmt), im.format)
+        return '%s thumbnail success!' % filename
+    except Exception:
+        return '%s thumbnail failed!' % filename
+
+
+def get_image_paths(folder):
+    return [os.path.join(folder, f) for f in os.listdir(folder) if 'png' in f]
+
+
+def main():
+    filenames = get_image_paths('images')
+    start_time = time.time()
+    
+    pool = Pool(4)
+    pool.map(create_thumbnail, filenames)
+    pool.close()
+    pool.join()
+
+    print time.time() - start_time
+
+
+if __name__ == '__main__':
+    main()
+<</code>>

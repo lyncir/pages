@@ -1,0 +1,25 @@
+= M2Crypto安装注意事项
+
+== 在CentOS,RedHat或Fedora上安装M2Crypto
+
+1. 下载M2Crypto
+
+2. 解压并进入文件夹, 添加fedora_setup.sh,然后执行 ./fedora_setup.sh install
+
+<<code python>>
+#!/bin/sh
+# filename fedora_setup.sh
+# This script is meant to work around the differences on Fedora Core-based
+# distributions (Redhat, CentOS, ...) compared to other common Linux
+# distributions.
+#
+# Usage: ./fedora_setup.sh [setup.py options]
+#
+
+arch=`uname -m`
+for i in SWIG/_{ec,evp}.i; do
+sed -i -e "s/opensslconf\./opensslconf-${arch}\./" "$i"
+done
+
+SWIG_FEATURES=-cpperraswarn python setup.py $*
+<</code>>

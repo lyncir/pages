@@ -1,0 +1,89 @@
+= 一些Python惯用法
+
+Safe Hammad
+Python Northwest
+
+==  Make a script both importable and executable
+
+<<code python>>
+if __name__ == '__main__':
+<</code>>
+
+
+== Test for "truthy" and "falsy" values
+
+<<code python>>
+if x:
+
+if not x:
+<</code>>
+
+
+=== What is truth?
+
+|=True|=False|
+|Non-empty string|Empty string|
+|Number not 0|Number 0|
+|Non-empty container: len(x) > 0|Empty container: len(x) == 0|
+|-|None|
+|True|False|
+|{{{__nonzero__}}} (2.x) / {{{__bool__}}} (3.x)|{{{__nonzero__}}} (2.x) / {{{__bool__}}} (3.x)|
+
+
+==  Use in where possible
+
+<<code python>>
+#Contains:
+if x in items:
+
+#Iteration:
+for x in items:
+<</code>>
+
+
+==  Swap values without temp variable
+
+<<code python>>
+a, b = b, a
+<</code>>
+
+
+== Build strings using sequence
+
+<<code python>>
+''.join(some_strings)
+<</code>>
+
+
+== EAFP is preferable to LBYL
+
+"It's {{{E}}}asier to {{{A}}}sk for {{{F}}}orgiveness than {{{P}}}ermission."
+
+"{{{L}}}ook {{{B}}}efore {{{Y}}}ou {{{L}}}eap"
+
+<<code python>>
+try:
+
+except:
+<</code>>
+
+
+== Enumerate
+
+<<code python>>
+for i, item in enumerate(items):
+<</code>>
+
+
+== Build lists using list comprehensions
+
+<<code python>>
+[i * 3 for i in data if i > 10]
+<</code>>
+
+
+== Create dict from keys and values using zip
+
+<<code python>>
+d = dict(zip(keys, values))
+<</code>>

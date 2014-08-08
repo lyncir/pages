@@ -1,0 +1,13 @@
+= Linux命令 - lsof
+
+== 示例
+
+=== 获得一个已被删除但仍被使用的文件列表,未释放其空间
+
+<<code bash>>
+$ lsof |grep deleted
+sendmail   1761     smmsp    3uW     REG              253,0  1392332800              9276903 /var/spool/clientmqueue/dfr5C0iDfq001761 (deleted)
+sendmail   3380     smmsp    3uW     REG              253,0  1239724032              9277076 /var/spool/clientmqueue/dfr696K5ln003380 (deleted)
+<</code>>
+
+结束相应的进程或##kill pid##释放其空间

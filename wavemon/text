@@ -1,0 +1,17 @@
+= Wavemon
+
+无线网络监视工具
+
+{{wavemon/uploads/wavemon.png|wovemon.png}}
+
+
+== 其它命令
+
+<<code bash>>
+$ iwconfig wlan0 | grep -i --color signal
+Link Quality=41/70  Signal level=-69 dBm
+
+$ watch -n 1 cat /proc/net/wireless
+<</code>>
+
+{{wavemon/uploads/wireless-link-speed.png|wireless-link-speed.png}}

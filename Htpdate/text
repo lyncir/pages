@@ -1,0 +1,24 @@
+= Htpdate
+
+linux 时间同步
+
+== git repo
+
+https://github.com/iridium77/htpdate.git
+
+== install
+
+<<code bash>>
+$ tar zxvf htpdate-x.y.z.tar.gz
+or
+$ tar jxvf htpdate-x.y.z.tar.bz2
+$ cd htpdate-X.Y.Z
+$ make
+$ make install
+<</code>>
+
+== 使用方法
+
+<<code bash>>
+$ htpdate -s www.linux.org www.freebsd.org
+<</code>>

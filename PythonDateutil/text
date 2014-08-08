@@ -1,0 +1,51 @@
+= python-dateutil 库
+
+datetime标准库的扩展
+
+== Documentation
+
+=== relativedelta
+
+主要用于计算时差
+
+==== Examples
+
+<<code python>>
+In [1]: import dateutil.relativedelta as dr
+
+In [2]: from datetime import datetime
+
+In [3]: datetime1 = datetime.now()
+
+In [4]: datetime2 = datetime.now()
+
+In [5]: datetime1
+Out[5]: datetime.datetime(2014, 2, 26, 11, 48, 2, 218872)
+
+In [6]: datetime2
+Out[6]: datetime.datetime(2014, 2, 26, 11, 48, 12, 685676)
+
+In [7]: dr.relativedelta(datetime1, datetime2)
+Out[7]: relativedelta(seconds=-11, microseconds=+533196)
+<</code>>
+
+==== keyword arguments
+
+ * year, month, day, hour, minute, second, microsecond
+ * years, months, weeks, days, hours, minutes, seconds, microseconds
+ * weekday
+ * leapdays
+ * yearday, nlyearday
+
+<<code python>>
+In [17]: now = datetime.datetime.now()
+
+In [18]: now
+Out[18]: datetime.datetime(2014, 2, 26, 14, 1, 12, 602005)
+
+In [19]: now + dr.relativedelta(years=+1, month=3, weekday=dr.TU)
+Out[19]: datetime.datetime(2015, 3, 31, 14, 1, 12, 602005)
+<</code>>
+
+
+=== rrule

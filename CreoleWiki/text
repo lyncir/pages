@@ -1,0 +1,72 @@
+= Creole
+
+== Base
+
+//italics//
+
+**bold**
+
+^^super^^script
+
+,,sub,,script
+
+##monospace##
+
+* Bullet list
+* Second item
+** Sub item
+
+# Numbered list
+# Second item
+## Sub item
+
+# Mixed list
+** Sub bullet item
+# Numbered item
+
+; Definition List
+: Definition
+
+Link to [[WikiPage]]
+
+[[http://google.com|Google]]
+
+== Large heading
+=== Medium Heading
+==== Small heading
+
+
+No
+linebreak!
+
+Use empty row
+
+Force\\linebreak
+
+Horizontal line:
+----
+
+{{CreoleWiki/uploads/Image.jpg|Cod}}
+
+|=|=table|=header|
+|a|table|row|
+|b|table|row|
+
+{{{
+== [[Nowiki]]:
+//**don't format//
+}}}
+
+
+> Indented regions\\
+> can include
+>> block elements
+
+use a tilde to ~**escape
+
+
+<<code python>>
+import os
+
+print os.path.exists('/tmp/123/txt')
+<</code>>
