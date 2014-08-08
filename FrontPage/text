@@ -20,12 +20,12 @@
 ** [[FundamentalAlgorithms|基础算法]]
 
 * Shell
-** [[lsof|Linux命令 - lsof]]
-** [[wavemon|linux命令 - wavemon]]
-** [[mtr|linux命令 - mtr]]
-** [[htop|Linux命令 - htop]]
-** [[iotop|Linux命令 - iotop]]
-** [[Htpdate|Linux命令 - htpdate]]
+** [[ManLsof|Linux命令 - lsof]]
+** [[ManWavemon|linux命令 - wavemon]]
+** [[ManMtr|linux命令 - mtr]]
+** [[ManHtop|Linux命令 - htop]]
+** [[ManIotop|Linux命令 - iotop]]
+** [[ManHtpdate|Linux命令 - htpdate]]
 
 * Other
 ** [[Redis|Redis相关]]
