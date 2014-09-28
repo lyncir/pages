@@ -1,0 +1,18 @@
+= Xargs
+
+== Options
+
+; **-I** __replace-str__
+: Replace occurrences of replace-str in the initial-arguments with names read from standard input.  Also, unquoted blanks do not terminate input items; instead  the  separator  is  then newline character.  Implies -x and -L 1.
+
+== Example
+
+<<code bash>>
+$ cat text
+/bin/bash /tmp/test.py
+/bin/bash /tmp/test1.py
+$ awk '{print $2}' text|xargs -I {} ls {}
+/tmp/test.py
+/tmp/test1.py
+$  
+<</code>>

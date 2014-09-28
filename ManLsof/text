@@ -1,6 +1,8 @@
-= Linux命令 - lsof
+= Lsof
 
-== 示例
+== Options
+
+== Example
 
 === 获得一个已被删除但仍被使用的文件列表,未释放其空间
 

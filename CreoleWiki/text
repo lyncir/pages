@@ -1,72 +1,185 @@
-= Creole
+= Creole Wiki
 
-== Base
+之所以用 [[http://www.wikicreole.org|Creole]]，是因为我喜欢它的简洁。
+
+== 基础
+
+<<code>>
+//italics//
+<</code>>
 
 //italics//
 
+<<code>>
 **bold**
+<</code>>
+
+**bold**
+
+<<code>>
+^^super^^script
+<</code>>
 
 ^^super^^script
 
+<<code>>
+,,sub,,script
+<</code>>
+
 ,,sub,,script
 
+<<code>>
 ##monospace##
+<</code>>
+
+##monospace##
+
+== 列表
+
+<<code>>
+* Bullet list
+* Second item
+** Sub item
+<</code>>
 
 * Bullet list
 * Second item
 ** Sub item
 
+<<code>>
 # Numbered list
 # Second item
 ## Sub item
+<</code>>
+
+# Numbered list
+# Second item
+## Sub item
+
+<<code>>
+# Mixed list
+** Sub bullet item
+# Numbered item
+<</code>>
 
 # Mixed list
 ** Sub bullet item
 # Numbered item
 
+== 定义
+
+<<code>>
+; Definition List
+: Definition
+<</code>>
+
 ; Definition List
 : Definition
 
+== 链接
+
+<<code>>
+Link to [[WikiPage]]
+<</code>>
+
 Link to [[WikiPage]]
 
+<<code>>
 [[http://google.com|Google]]
+<</code>>
+
+[[http://google.com|Google]]
+
+== 标题
+
+<<code>>
+== Large heading
+=== Medium Heading
+==== Small heading
+<</code>>
 
 == Large heading
 === Medium Heading
 ==== Small heading
 
+== 图片
 
-No
-linebreak!
-
-Use empty row
-
-Force\\linebreak
-
-Horizontal line:
-----
+<<code>>
+{{CreoleWiki/uploads/Image.jpg|Cod}}
+<</code>>
 
 {{CreoleWiki/uploads/Image.jpg|Cod}}
+
+== 表格
+
+<<code>>
+|=|=table|=header|
+|a|table|row|
+|b|table|row|
+<</code>>
 
 |=|=table|=header|
 |a|table|row|
 |b|table|row|
 
-{{{
-== [[Nowiki]]:
-//**don't format//
-}}}
-
-
-> Indented regions\\
-> can include
->> block elements
-
-use a tilde to ~**escape
-
+== 代码
 
 <<code python>>
 import os
 
 print os.path.exists('/tmp/123/txt')
 <</code>>
+
+{{{
+== [[Nowiki]]:
+//**don't format//
+}}}
+
+<<code>>
+use a tilde to ~**escape
+<</code>>
+
+use a tilde to ~**escape
+
+== 留言
+
+<<code>>
+> Indented regions\\
+> can include
+>> block elements
+<</code>>
+
+
+> Indented regions\\
+> can include
+>> block elements
+
+== 其它
+
+<<code>>
+No
+linebreak!
+<</code>>
+
+No
+linebreak!
+
+<<code>>
+Use empty row
+<</code>>
+
+Use empty row
+
+<<code>>
+Force\\linebreak
+<</code>>
+
+Force\\linebreak
+
+<<code>>
+Horizontal line:
+----
+<</code>>
+
+Horizontal line:
+----

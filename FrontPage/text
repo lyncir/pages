@@ -1,32 +1,38 @@
 = 首页
 
-* Python
+* Wiki
 ** [[CreoleWiki|Creole Wiki]]
+
+
+* Python
+** [[PEP8|PEP8 -- Style Guide for Python Code]]
+** [[PEP3143|PEP3143 -- Standard daemon process library]]
 ** [[DeployPythonApp|部署Python应用]]
 ** [[ParallelismInOneLine|Python并行任务技巧]]
 ** [[FunctionalLinkedListsInPython|Python中的函数式链表]]
 ** [[PythonIdioms|一些Python惯用法]]
-** [[FullstackPython|全栈 Python]]
 ** [[PythonDateutil|python-dateutil库]]
-** [[Graphite|Graphite监控]]
-** [[pip|pip的正确用法]]
-** [[M2Crypto|M2Crypto安装注意事项]]
-** [[Polysh|Polysh]]
-
-* Test
-** [[Test|测试页]]
+** [[Pip|pip的正确用法]]
+** [[Graphite|Graphite]]
+** [[Ansible|Ansible]]
+ 
 
 * 算法
 ** [[FundamentalAlgorithms|基础算法]]
 
+
 * Shell
+** [[ManXargs|Linux命令 - xargs]]
 ** [[ManLsof|Linux命令 - lsof]]
-** [[ManWavemon|linux命令 - wavemon]]
-** [[ManMtr|linux命令 - mtr]]
-** [[ManHtop|Linux命令 - htop]]
-** [[ManIotop|Linux命令 - iotop]]
 ** [[ManHtpdate|Linux命令 - htpdate]]
 
+
+* DevOps
+** [[Iptables|Iptables学习]]
+** [[M2Crypto|M2Crypto安装注意事项]]
+** [[RedisAOF|Redis AOF]]
+
 * Other
-** [[Redis|Redis相关]]
 ** [[Remember|下辈子，无论爱与不爱，都不会再见]]
+
+[[Todo| To Do]]

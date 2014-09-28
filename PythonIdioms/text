@@ -87,3 +87,22 @@ for i, item in enumerate(items):
 <<code python>>
 d = dict(zip(keys, values))
 <</code>>
+
+
+== Default Dict
+
+<<code python>>
+from collections import defaultdict
+
+l = [('a', 1), ('b', 2), ('a', 3), ('c', 4)]
+d = defaultdict(list)
+for k,v in l:
+    d[k].append(v)
+<</code>>
+
+<<code python>>
+l = [('a', 1), ('b', 2), ('a', 3), ('c', 4)]
+d = {}
+for k,v in l:
+    d.setdefault(k,[]).append(v)
+<</code>>

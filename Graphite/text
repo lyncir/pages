@@ -1,5 +1,84 @@
-= Graphite监控
+= Graphite
 
-Graphite做两件事:
- * 存储数据
- * 按需绘图
+== Overview
+
+Graphite主要做两件事:
+ # 存储数据
+ # 按需绘图
+
+Graphite包含3个部分:
+ # **carbon** - 一个监听实时序列数据的[[http://www.twistedmatrix.com/|Twisted]]守护进程
+ # **whisper** - 用于存储实时序列数据的一个简单的数据库(类似于[[http://oss.oetiker.ch/rrdtool/|RRD]])
+ # **graphite webapp** - 使用[[http://www.cairographics.org/|Cario]]按需画图的[[http://www.djangoproject.com/|Django]]应用
+
+== Installing Graphite
+
+=== Dependencies
+
+* a UNIX-like Operating System
+* Python 2.6 or greater
+* Pycairo
+* Django 1.4 or greater
+* django-tagging 0.3.1 or greater
+* Twisted 8.0 or greater (10.0+ recommended)
+* zope-interface (often included in Twisted package dependency)
+* fontconfig and at least one font package (a system package usually)
+* A WSGI server and web server. Popular choices are: - Apache with mod_wsgi - gunicorn with nginx - uWSGI with nginx
+
+=== Installing From Pip
+
+<<code bash>>
+pip install https://github.com/graphite-project/ceres/tarball/master
+pip install whisper
+pip install carbon
+pip install graphite-web
+<</code>>
+
+=== Initial Configuration
+
+<<code bash>>
+PYTHONPATH=$GRAPHITE_ROOT/webapp django-admin.py syncdb --settings=graphite.settings
+sudo chown nobody:nobody /opt/graphite/storage/graphite.db
+<</code>>
+
+==== Configure Webserver (Nginx)
+
+wsgi:
+<<code bash>>
+$ cp graphite.wsgi.example wsgi.py
+<</code>>
+
+graphite.xml
+<<code xml>>
+<uwsgi>
+	<socket>/tmp/uwsgi.graphite.sock</socket>
+	<chdir>/opt/graphite/conf</chdir>
+	<pythonpath>/opt/graphite/webapp</pythonpath>
+	<module>wsgi</module>
+	<uid>nginx</uid> <!-- Use appropriate user credentials for running uwsgi -->
+	<gid>nginx</gid> 
+</uwsgi>
+<</code>>
+
+nginx.conf
+<<code>>
+server {
+		listen 80;
+		server_name localhost;
+
+		access_log /var/log/nginx/graphite-web.access_log main;
+		error_log /var/log/nginx/graphite-web.error_log info;
+
+		location /media/admin/ {
+			alias /usr/lib/python2.7/site-packages/django/contrib/admin/media/;
+		}
+
+		location /content/ {
+			alias /opt/graphite/webapp/content/;
+		}
+
+		location / {
+			include uwsgi_params;
+			uwsgi_pass unix:/tmp/uwsgi.graphite.sock;
+		}
+<</code>>

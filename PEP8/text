@@ -1,0 +1,37 @@
+= Style Guide for Python Code
+
+[[http://legacy.python.org/dev/peps/pep-0008/]]
+
+== Code lay-out
+
+=== Indentation
+
+每级缩进用 4 个空格。 
+
+=== Tabs or Spaces?
+
+绝不要混合使用tab和空格.
+
+=== Maximum Line Length
+
+限制所有行的最大行宽为 79 字符。 
+
+=== Blank Lines
+
+用两行空行分割顶层函数和类的定义。 
+
+类内方法的定义用单个空行分割。 
+
+=== Source File Encoding
+
+Python 核心发布中的代码应该始终使用 UTF-8 (或 Python2 中使用 ASCII)。 
+
+=== Imports
+
+* 通常应该在单独的行中导入
+* Imports 通常被放置在文件的顶部，仅在模块注释和文档字符串之后，在模块的全局变量和常量之前。 
+** Imports应该按照如下顺序成组安放： 
+### 标准库的导入 
+### 相关的第三方包的导入
+### 本地应用/库的特定导入 
+
