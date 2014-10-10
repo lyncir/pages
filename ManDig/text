@@ -1,0 +1,51 @@
+= Dig
+
+== Usage
+
+<<code bash>>
+dig @dnsserver name querytype
+<</code>>
+
+* **-c**: 可以设置协议类型（class），包括IN(默认)、CH和HS。
+* **-f**: dig支持从一个文件里读取内容进行批量查询，文件的内容要求一行为一个查询请求。
+* **-4**/**-6**: 用于设置仅适用哪一种作为查询包传输协议，分别对应着IPv4和IPv6。
+* **-t**: 用来设置查询类型，默认情况下是A，也可以设置MX等类型。
+* **-q**: 可以显式设置你要查询的域名，这样可以避免和其他众多的参数、选项相混淆，提高了命令的可读性。
+* **-x**: 是逆向查询选项。可以查询IP地址到域名的映射关系。如 dig -x 193.0.14.129
+
+**querytype**
+
+ * A：(the IP address)查看主机的IPv4地址
+ * AAAA：查看主机的IPv6地址
+ * ANY：查看关于主机域的所有信息
+ * CNAME：查找与别名对应的正式名字
+ * HINFO：查找主机的CPU与操作系统类型
+ * MINFO：查找邮箱信息
+ * MX：(mail exchanges)查找邮件交换信息
+ * NS：(nameservers)查找主机域的域名服务器
+ * PTR：查找与给定IP地址匹配的主机名
+ * RP：查找域负责人记录
+ * SOA：查找域内的SOA地址
+ * UINFO：查找用户信息
+
+== Other Options
+
+<<code bash>>
+dig +tcp www.baidu.com  //使用tcp代替默认的udp查询。
+dig +domain=baidu.com image  //默认追加域。
+dig +trace www.baidu.com  //追踪查询的所有过程。
+dig +short www.baidu.com  //输出最精简的信息。
+dig +nostat www.baidu.com //不会输出最后的统计信息。
+<</code>>
+
+
+== Example
+
+<<code bash>>
+$ dig redhat.com  MX +noall +answer
+
+; <<>> DiG 9.7.3-RedHat-9.7.3-2.el6 <<>> redhat.com MX +noall +answer
+;; global options: +cmd
+redhat.com.             513     IN      MX      5 mx1.redhat.com.
+redhat.com.             513     IN      MX      10 mx2.redhat.com.
+<</code>>
