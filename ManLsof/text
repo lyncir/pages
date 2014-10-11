@@ -2,9 +2,42 @@
 
 == Options
 
+* **+D** __D__ List opened files under a directory(recurse)
+* **+d** __D__ List opened files under a directory(don't recurse)
+* **-c** __c__ List opened files based on process names starting with
+* **-u** __s__ List files opened by a specific user
+* **-p** __s__ List all open files by a specific process
+* **-i** __[i]__ List all network connections
+
+<<code bash>>
+# lsof
+
+COMMAND  PID       USER   FD      TYPE     DEVICE  SIZE/OFF       NODE NAME
+init       1       root  cwd       DIR        8,1      4096          2 /
+init       1       root  txt       REG        8,1    124704     917562 /sbin/init
+...
+<</code>>
+
+**FD** – Represents the file descriptor.
+
+* cwd – Current Working Directory
+* txt – Text file
+* mem – Memory mapped file
+* mmap – Memory mapped device
+* NUMBER – Represent the actual file descriptor.The character after the number i.e ’1u’, represents the mode in which the file is opened. r for read, w for write, u for read and write.
+
+**TYPE** - Specifies the type of the file.
+
+* REG – Regular File
+* DIR – Directory
+* FIFO – First In First Out
+* CHR – Character special file
+
+
+
 == Example
 
-=== 获得一个已被删除但仍被使用的文件列表,未释放其空间
+获得一个已被删除但仍被使用的文件列表,未释放其空间
 
 <<code bash>>
 $ lsof |grep deleted
@@ -13,3 +46,9 @@ sendmail   3380     smmsp    3uW     REG              253,0  1239724032         
 <</code>>
 
 结束相应的进程或##kill pid##释放其空间
+
+<<code bash>>
+$ lsof | nl
+<</code>>
+
+不加参数,显示所有已打开的文件
