@@ -1,0 +1,8 @@
+= AMQP和RabbitMQ
+
+== 四个概念
+
+* 虚拟主机（virtual host）
+* 交换机（exchange）
+* 队列（queue）
+* 绑定（binding）

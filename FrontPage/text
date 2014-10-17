@@ -13,8 +13,8 @@
 ** [[PythonIdioms|一些Python惯用法]]
 ** [[PythonDateutil|python-dateutil库]]
 ** [[Pip|pip的正确用法]]
-** [[Graphite|Graphite]]
-** [[Ansible|Ansible]]
+** [[AMQPandRabbitMQ|AMQP和RabbitMQ]]
+
  
 
 * 算法
@@ -29,6 +29,8 @@
 
 
 * DevOps
+** [[Graphite|Graphite]]
+** [[Ansible|Ansible]]
 ** [[Iptables|Iptables学习]]
 ** [[M2Crypto|M2Crypto安装注意事项]]
 ** [[RedisAOF|Redis AOF]]
