@@ -6,3 +6,70 @@
 * 交换机（exchange）
 * 队列（queue）
 * 绑定（binding）
+
+== Example
+
+amqp_consumer.py
+
+<<code python>>
+# -*- coding: utf8 -*-
+
+from amqplib import client_0_8 as amqp
+
+
+conn = amqp.Connection(host='localhost:5672', 
+                       userid='guest',
+                       password='guest',
+                       virtual_host='/',
+                       insist=False)
+chan = conn.channel()
+chan.queue_declare(queue="po_box",
+                   durable=True,
+                   exclusive=False,
+                   auto_delete=False)
+chan.exchange_declare(exchange="sorting_room",
+                      type="direct",
+                      durable=True,
+                      auto_delete=False)
+chan.queue_bind(queue="po_box", exchange="sorting_room", routing_key="json")
+
+def recv_callback(msg):
+    print 'Received: ' + msg.body + ' from channel #' + str(msg.channel.channel_id)
+
+
+chan.basic_consume(queue="po_box", 
+                   no_ack=True, 
+                   callback=recv_callback,
+                   consumer_tag="testtag")
+while True:
+    chan.wait()
+chan.basic_cancel("testtag")
+
+
+chan.close()
+conn.close()
+<</code>>
+
+
+amqp_publisher.py
+
+<<code python>>
+# -*- coding: utf-8 -*-
+import sys
+from amqplib import client_0_8 as amqp
+
+conn = amqp.Connection(host='localhost:5672',
+                       userid='guest',
+                       password='guest',
+                       virtual_host='/',
+                       insist=False)
+chan = conn.channel()
+
+msg = amqp.Message(sys.argv[1])
+msg.properties["delivery_mode"] = 2
+chan.basic_publish(msg, exchange="sorting_room", routing_key="json")
+
+chan.close()
+conn.close()
+<</code>>
+
