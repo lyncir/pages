@@ -1,0 +1,26 @@
+= Python2中的Unicode
+
+=== 在代码中
+
+<<code python>>
+s = "编码"
+print s
+<</code>>
+
+<<code bash>>
+$ python unicodetest.py
+  File "unicodetest.py", line 1
+SyntaxError: Non-ASCII character '\xe7' in file unicodetest.py on line 1, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details
+<</code>>
+
+<<code python>>
+# -*- coding: utf-8 -*-
+s = "编码"
+print s
+<</code>>
+
+<<code bash>>
+$ python unicodetest.py
+编码
+<</code>>
+
