@@ -1,0 +1,12 @@
+= blkid
+
+查看块设备属性,如:UUID,TYPE
+
+== Example
+
+<<code bash>>
+/dev/sda1: UUID="dc90bd1d-6208-45e5-942f-99fa465e89f2" TYPE="ext2" PARTUUID="0008ec2a-01" 
+/dev/sda2: UUID="a63adda2-0651-4029-a48c-ed8a8b67842d" TYPE="swap" PARTUUID="0008ec2a-02" 
+/dev/sda3: UUID="93db4226-8d6e-4344-bb27-85843ba45b7b" TYPE="xfs" PARTUUID="0008ec2a-03" 
+/dev/sda4: UUID="ad029a64-03f2-436b-b11d-f4cfa63f8dc3" TYPE="xfs" PARTUUID="0008ec2a-04"
+<</code>>
