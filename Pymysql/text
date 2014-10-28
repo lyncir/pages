@@ -1,0 +1,54 @@
+= PyMySQL
+
+== Example
+
+<<code python>>
+# -*- coding: utf-8 -*-                                                                                                                                                                   
+
+import pymysql
+
+
+conn = None
+
+
+def init_connection():
+    global conn
+    if conn == None:
+        conn = pymysql.connect(host="localhost",
+                               port=3306,
+                               user="root",
+                               passwd="",
+                               db="ansible",
+                               charset="utf8")
+
+
+def close_connection():
+    global conn
+    conn.close()
+
+
+sel_sql = ""
+ins_sql = ""
+upd_sql = ""
+
+def select(params):
+    global conn
+    if conn == None:
+        init_connection()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute(sel_sql, params)
+    cur.connection.commit()
+    results = cur.fetchall()
+    cur.close()
+    return results
+
+
+def insert(params):
+    global conn
+    if conn == None:
+        init_connection()
+    cur = conn.cursor()
+    cur.execute(ins_sql, params)
+    cur.connection.commit()
+    cur.close()
+<</code>>
