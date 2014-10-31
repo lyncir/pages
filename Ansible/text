@@ -65,3 +65,54 @@ ansible <pattern_goes_here> -m <module_name> -a <arguments>
 # Such as:
 ansible webservers -m service -a "name=httpd state=restarted"
 <</code>>
+
+
+== Ansible Python API
+
+add_user.yml
+<<code YAML>>
+---
+- hosts: '{{ host }}'
+  remote_user: '{{ user }}'
+  tasks:
+    - name: add user
+      # Linux passwd use SHA512
+      # from passlib.hash import sha512_crypt
+      # sha512_crypt.encrypt('passwdstr')
+      # Options: name password uid group shell generate_ssh_key ssh_key_type ssh_key_comment state remove
+      user: name={{ username }} password={{ password }}
+
+    - name: add user to /etc/sudoers
+      # Options: dest line regexp owner group mode backup
+      lineinfile: dest=/etc/sudoers line="{{ username }} ALL=(ALL) ALL"
+<</code>>
+
+add_user.py
+<<code python>>
+# -*- coding: utf-8 -*-
+
+from ansible.playbook import PlayBook
+from ansible import callbacks
+from ansible import utils
+
+
+pb = "add_user.yml"
+args = {"host": "spider",
+        "user": "root",
+        "username": "chenchangming",
+        "password": "$6$rounds=100000$S6awA3g/94I3N7OV$I3XBFjP52IRfwkfq6kUooN0HN8vRlcYHYUlNgUgvEd38aqFtpMEYMwC1uQ.zen2UAsX3TNLfwgsKtq3CjqxL90"}
+
+playbook_cp = callbacks.PlaybookCallbacks(verbose=utils.VERBOSITY)
+stats = callbacks.AggregateStats()
+runner_cb = callbacks.PlaybookRunnerCallbacks(stats, verbose=utils.VERBOSITY)
+
+playbook = PlayBook(playbook=pb,
+         extra_vars=args,
+         callbacks=playbook_cp,
+         stats=stats,
+         runner_callbacks=runner_cb
+        )
+
+results = playbook.run()
+print results
+<</code>>
