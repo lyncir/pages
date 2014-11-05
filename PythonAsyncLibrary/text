@@ -1,0 +1,70 @@
+= Python 异步
+
+* Twisted
+* Tornado
+* Gevent
+* tulip
+
+== 阻塞与非阻塞
+
+<<code python>>
+import socket
+
+s = socket.socket()
+s.connect(('www.baidu.com', 80))
+
+print "We are connected %s:%d" % s.getpeername()
+<</code>>
+
+假如网络状况不是很好，执行这段程序时，我们很有可能要等个几秒钟，才能看到 ##We are connected## 的输出字样。
+
+对于这样的代码，我们就可以说程序**阻塞**在了 ##connect()## 的调用上；而这样的函数我们叫做//**阻塞式**//的。
+
+那么非阻塞呢？还是看一段代码。
+
+<<code python>>
+import socket
+
+s = socket.socket()
+s.setblocking(0)
+
+try:
+    s.connect(('www.baidu.com', 80))
+except socket.error as e:
+    print str(e)
+    i = 0
+    while True:
+        try:
+            print "We are connected %s:%d" % s.getpeername()
+            break
+        except:
+            print "Let's do some math while waiting: %d" % i
+            i = i + 1
+else:
+    print "We are connected %s:%d" % s.getpeername()
+<</code>>
+
+首先看一开始的变化，多了一句 ##s.setblocking(0)##。这是说，将这个 socket 对象变成//**非阻塞式**//的。这样一来，接下来的许多本应阻塞的调用将不会阻塞。
+
+比如 ##connect()##。非阻塞的 ##connect()## 调用将会立即结束，而不管这个 TCP 连接是否真正建立了——如果 TCP 连接还没有完成握手，那么 ##connect()## 会抛出一个异常说“开始连了，别着急一会儿就好”；否则（应该没有否则）就会“正常”地走 ##try...else## 的路线。
+
+抓到这个异常之后呢，我们就可以充分利用这段原本要阻塞的时间，在连接完全建立之前做一些有意义的事情——比如数数。
+
+== 同步和异步
+可以看得出来，阻塞和非阻塞是说//**函数调用**//的，调用了之后要等到底层完事儿了之后才能继续的叫做阻塞；调用了之后，要么立即返回，要么立即抛异常，这就是非阻塞。
+
+而与之如影随行的一对儿概念——同步和异步——则说的是一段程序的//**执行处理方式**//。
+
+待续...
+
+== 并发与并行
+
+//**并行**//的概念着重于处理端，也就是办理通行证的工作人员。有 5 个窗口开放，就意味着同一时间可以有 5 个业务可以得到并行的处理。对于计算机来说，并行势必要有多颗处理器，真正从物理上可以并行地处理多个任务；单 CPU 用多线程实现的叫做时分复用——也许超线程除外。
+* [[ParallelismInOneLine|Python并行任务技巧]]
+
+相对于并行着重于处理端，//**并发**//的概念则是关于请求端，也就是关于用户的。当我们谈及朝阳区出入境办证大厅的并发量的时候，我们是在说该大厅在某一时刻能容纳的前来办证的人数，最大并发量说白了就是大厅里能站下多少人——包括正在办的和排队的。
+
+待续...
+
+
+Ref: [[http://segmentfault.com/blog/fantix/1190000000471602|Python 开源异步并发框架的未来]]

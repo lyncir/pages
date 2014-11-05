@@ -16,7 +16,8 @@
 ** [[AMQPandRabbitMQ|AMQP和RabbitMQ]]
 ** [[UnicodeInPython2|Python2中的Unicode]]
 ** [[Pymysql|Pymysql]]
-
+** [[PythonAsyncLibrary|Python 异步]]
+** [[WhatIsAMetaclassInPython|Python中的元类]]
  
 
 * 算法
@@ -45,5 +46,6 @@
 ** [[http://blog.xway.me/]] Xway Blog
 ** [[http://amask.net]] Amas Blog
 ** [[http://weekly.pychina.org/]] 蟒周刊
+** [[http://segmentfault.com/t/python/blogs]] SF python
 
 [[Todo| To Do]]
