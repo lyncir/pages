@@ -1,1 +1,42 @@
 = Decorators And Closures
+
+== 闭包
+
+一个函数和它的环境变量合在一起，就构成了一个##闭包(closure)##。在Python中，所谓的闭包是一个包含有环境变量取值的函数对象。环境变量取值被保存在函数对象的##{{__closure__}}##属性中。比如下面的代码：
+<<code python>>
+def line_conf():
+    b = 15
+    def line(x):
+        return 2*x+b
+    return line       # return a function object
+
+b = 5
+my_line = line_conf()
+print(my_line.__closure__)
+print(my_line.__closure__[0].cell_contents)
+<</code>>
+
+{{__closure__}}里包含了一个元组(tuple)。这个元组中的每个元素是##cell##类型的对象。我们看到第一个cell包含的就是整数15，也就是我们创建闭包时的环境变量b的取值。
+
+下面看一个闭包的实际例子：
+<<code python>>
+def line_conf(a, b):
+    def line(x):
+        return ax + b
+    return line
+
+line1 = line_conf(1, 1)
+line2 = line_conf(4, 5)
+print(line1(5), line2(5))
+<</code>>
+
+这个例子中，函数line与环境变量a,b构成闭包。在创建闭包的时候，我们通过line_conf的参数a,b说明了这两个环境变量的取值，这样，我们就确定了函数的最终形式(y = x + 1和y = 4x + 5)。我们只需要变换参数a,b，就可以获得不同的直线表达函数。由此，我们可以看到，闭包也具有提高代码可复用性的作用。
+
+
+== 装饰器
+
+
+
+
+Ref:
+* [[http://www.cnblogs.com/vamei/archive/2012/12/15/2772451.html]]
