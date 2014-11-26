@@ -1,0 +1,19 @@
+= History
+
+== Example
+
+Display Date And Time For Each Command
+<<code bash>>
+$ HISTTIMEFORMAT="%d/%m/%y %T "
+<</code>>
+
+or
+<<code bash>>
+$ echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
+<</code>>
+
+
+* %d - Day
+* %m - Month
+* %y - Year
+* %T - Time
