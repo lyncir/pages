@@ -1,0 +1,26 @@
+= Some of Python Librarys
+
+== echo
+
+https://github.com/itsnauman/echo
+
+一个微型库, 只作一件事儿, 对失败的操作重试!
+
+<<code python>>
+import requests
+from pyecho import echo
+
+@echo(10) # Retry function upto 10 times
+def fetch():
+    r = requests.get('http://google.com')
+    return r.text
+
+fetch()
+<</code>>
+
+== pyquery
+
+https://github.com/gawel/pyquery
+
+和BeautifulSoup一样,分析html和xml页面
+
