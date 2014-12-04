@@ -1,5 +1,35 @@
 = Some of Python Librarys
 
+== requests
+
+https://github.com/kennethreitz/requests
+
+下载文件:
+<<code python>>
+@echo(cfg['retry_times'])
+def download(url, d_path):
+    file_name = re.split(r"/|=", url)[-1]
+    try:
+        print 'Downloading %s ...' % url 
+        with open(os.path.join(d_path, file_name), 'wb') as fn:
+            # 如果有跳转,请去掉headers
+            #request = requests.get(url, stream=True, headers=settings.request_headers, timeout=cfg['timeout'])
+            request = requests.get(url, stream=True, timeout=cfg['timeout'])
+            if not request.ok:
+                print request.reason
+
+            for block in request.iter_content(1024):
+                if not block:
+                    break
+                fn.write(block)
+        print 'Download %s Success' % url
+        return True
+    except (socket.error,urllib2.HTTPError) as msg:
+        print 'Download %s Failed ' % url
+        print msg
+        return False
+<</code>>
+
 == echo
 
 https://github.com/itsnauman/echo
@@ -23,4 +53,11 @@ fetch()
 https://github.com/gawel/pyquery
 
 和BeautifulSoup一样,分析html和xml页面
+
+<<code python>>
+from pyquery import PyQuery as pq
+
+doc = pq('<html><body><p>Hello World</p></body></html>')
+print doc('p').text()
+<</code>>
 
