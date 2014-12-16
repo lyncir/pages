@@ -1,1 +1,15 @@
 = PIL
+
+== Image
+
+=== instance attributes
+
+<<code python>>
+from PIL import Image
+
+im = Image.open('test.png')
+<</code>>
+
+* format 图片格式
+* size 图片大小 (width, height) pix
+* mode 图片模式 'L' 灰度图片,'RGB' 真彩图片,'CMYK' 印刷图片
