@@ -21,7 +21,7 @@
 ** [[DecoratorsAndClosures|Python装饰器和闭包]]
 ** [[PyLibs|一些简单实用的Python库]]
 ** [[PythonImagingLibrary|PIL 对图片的一些处理]]
- 
+** [[PythonStrFormat|str.format 格式化字符串输出]]
 
 * 算法
 ** [[FundamentalAlgorithms|基础算法]]

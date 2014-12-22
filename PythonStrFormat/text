@@ -1,0 +1,102 @@
+= str.format
+
+常用%来格式化字符串输出:
+<<code python>>
+>>> first = 'Reuven'
+>>> last = 'Lerner'
+>>> "Good morning, %s %s" % (first, last)
+
+'Good morning, Reuven Lerner'
+<</code>>
+
+使用str.format格式化字符串输出:
+<<code python>>
+>>> first = 'Reuven'
+>>> last = 'Lerner'
+>>> "Good morning, {} {}".format(first, last)
+
+'Good morning, Reuven Lerner'
+<</code>>
+
+以相反的顺序输入参数:
+<<code python>>
+>>> first = 'Reuven'
+>>> last = 'Lerner'
+>>> "Good morning, {1} {0}".format(first, last)
+
+'Good morning, Lerner Reuven'
+<</code>>
+
+参数为序列:
+<<code python>>
+>>> names = ('Reuven', 'Lerner')
+>>> "Good morning, {} {}".format(*names)
+
+'Good morning, Reuven Lerner'
+<</code>>
+
+参数为字典:
+<<code python>>
+>>> person = {'first':'Reuven', 'last':'Lerner'}
+>>> "Good morning, {first} {last}".format(**person)
+
+'Good morning, Reuven Lerner'
+<</code>>
+
+别这么用:
+<<code python>>
+>>> person = {'first':'Reuven', 'last':'Lerner'}
+>>> "Good {0}, {first} {last}".format('morning', **person)
+
+'Good morning, Reuven Lerner'
+<</code>>
+
+fixed-width field:
+<<code python>>
+>>> "Your name is {name:10}".format(name="Reuven")
+
+'Your name is Reuven    '
+<</code>>
+
+* ##<## 左对齐
+* ##>## 右对齐
+* ##^## 居中
+* ##=## 只对numeric类型 eg. +000000120
+
+
+<<code python>>
+>>> "Your name is {name:*^10}".format(name="Reuven")
+
+'Your name is **Reuven**'
+<</code>>
+
+可用的integer表现类型:
+<<code python>>
+>>> "The price is ${number:x}.".format(number=123)
+
+'The price is $7b.'
+
+>>> "Your call is important to us. You are call #{number:05}.".format(number=123)
+
+'Your call is important to us. You are call #00123.'
+<</code>>
+
+* ##b## 二进制
+* ##c## 字符
+* ##d## 十进制
+* ##o## 八进制
+* ##x## 十六进制(小写)
+* ##X## 十六进制(大写)
+* ##n## 数字,和##d##一样
+* ##None## 和##d##一样
+
+总结:
+<<code>>
+format_spec ::=  [[fill]align][sign][#][0][width][,][.precision][type]
+fill        ::=  <any character>
+align       ::=  "<" | ">" | "=" | "^"
+sign        ::=  "+" | "-" | " "
+width       ::=  integer
+precision   ::=  integer
+type        ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
+<</code>>
