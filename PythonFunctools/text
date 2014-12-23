@@ -1,0 +1,48 @@
+= Python Functools
+
+== partial
+
+##partial(func, *args, **keywords)## 固化部分参数
+<<code python>>
+>>> def fun(x,y):
+>>>    print x,y
+
+>>> f = partial(fun, 10)
+>>> f(20)
+10 20
+<</code>>
+
+== reduce
+
+##reduce(function, sequence[, initial])## 和内建方法一样
+
+<<code python>>
+>>> reduce(lambda x, y: x+y, range(1,10))
+45
+<</code>>
+
+== update_wrapper
+
+##update_wrapper(wrapper, wrapped, assigned=WRAPPER_ASSIGNMENTS, updated=WRAPPER_UPDATES)##
+
+将wrapped中的WRAPPER_ASSIGNMENTS = ('module', 'name', 'doc') 赋值给wrapper
+将wrapped中的WRAPPER_UPDATES = ('dict',)update 到 wrapper
+
+
+== wraps
+
+##wraps(wrapped, assigned=WRAPPER_ASSIGNMENTS, updated=WRAPPER_UPDATES)##
+
+实质是封装了update_wrapper 固化了参数 
+return partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated)
+
+== total_ordering
+
+这个装饰器在特定的场合有一定用处，它的作用是为实现了至少lt、le、
+gt、ge其中一个的类加上其他的比较方法，这是一个类装饰器
+
+== cmp_to_key
+
+Convert a cmp= function into a key= function
+
+cmp(self,other) 有三种返回值
