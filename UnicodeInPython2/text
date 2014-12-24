@@ -24,3 +24,11 @@ $ python unicodetest.py
 编码
 <</code>>
 
+
+=== 当终端编码不一致
+
+<<code python>>
+reload(sys)
+sys.setdefaultencoding("utf-8")
+<</code>>
+
