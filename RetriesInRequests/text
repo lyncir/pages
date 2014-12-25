@@ -1,0 +1,26 @@
+= Retries in Requests
+
+有时网站和服务器会发生各种问题:
+* read errors (读错误)
+* large numbers of redirects (大量的跳转)
+* failure to connect (内容失败)
+* 500 errors500 (错误)
+
+== Using Retries in urllib3
+
+当每次收到500错误时,可以使用##PoolManager##进行重试
+<<code python>>
+from urllib3.util import Retry
+from urllib3 import PoolManager
+
+retries = Retry(total=5, status_forcelist=[500])
+manager = PoolManager(retries=retries)
+response = manager.request('GET', 'https://httpbin.org/status/500')
+<</code>>
+
+== Using Retries in requests
+
+== A non-trivial example
+
+Ref:
+http://www.coglib.com/~icordasc/blog/2014/12/retries-in-requests.html
