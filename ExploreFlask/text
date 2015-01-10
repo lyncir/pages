@@ -1,0 +1,24 @@
+= Explore Flask
+
+== 目录结构
+
+<<code bash>>
+├── config.py
+├── requirements.txt
+├── run.py
+├── instance/
+│   ├── config.py
+├── yourapp/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── templates/
+│   ├── static/
+<</code>>
+
+##instance## 目录内的 ##config.py## 是用于测试的配置文件
+<<code python>>
+app = Flask(__name__, instance_relative_config=True)                                                                                                                                               
+app.config.from_object('config')
+app.config.from_pyfile('config.py', silent=True)
+<</code>>
