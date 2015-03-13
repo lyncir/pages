@@ -46,6 +46,7 @@
 ** [[Iptables|Iptables学习]]
 ** [[M2Crypto|M2Crypto安装注意事项]]
 ** [[RedisAOF|Redis AOF]]
+** [[RedisCommands| Redis 常用命令 ]]
 
 * Other
 ** [[Remember]]
@@ -54,6 +55,6 @@
 ** [[http://blog.xway.me/]] Xway Blog
 ** [[http://amask.net]] Amas Blog
 ** [[http://weekly.pychina.org/]] 蟒周刊
-** [[http://segmentfault.com/t/python/blogs]] SF python
+** [[http://segmentfault.net/t/python/blogs]] SF python
 
 [[Todo| To Do]]

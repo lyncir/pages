@@ -1,0 +1,19 @@
+= Redis Commands
+
+=== 查看客户端连接
+
+<<code bash>>
+$ redis-cli
+redis 127.0.0.1:6379> client list
+addr=192.168.1.2:4300 fd=8 idle=1 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=get
+addr=192.168.1.2:43355 fd=15 idle=3 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=expire
+addr=192.168.1.2:34576 fd=10 idle=2 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=hget
+addr=192.168.1.2:42458 fd=18 idle=3 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=expire
+addr=192.168.1.2:17684 fd=5 idle=1 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=get
+addr=192.168.1.2:17685 fd=6 idle=1 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=hget
+addr=192.168.1.2:17686 fd=7 idle=3 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=hset
+addr=192.168.1.1:16228 fd=17 idle=2 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=get
+addr=192.168.1.1:16229 fd=19 idle=2 flags=N db=0 sub=0 psub=0 qbuf=0 obl=0 oll=0 events=r cmd=hget
+<</code>>
+
+Ref: [[http://redis.io/commands/client-list]]
