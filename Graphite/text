@@ -11,6 +11,14 @@ Graphite包含3个部分:
  # **whisper** - 用于存储实时序列数据的一个简单的数据库(类似于[[http://oss.oetiker.ch/rrdtool/|RRD]])
  # **graphite webapp** - 使用[[http://www.cairographics.org/|Cario]]按需画图的[[http://www.djangoproject.com/|Django]]应用
 
+
+=== Carbon
+
+三种不同类型的Carbon守护进程:
+ * **Cache**：接受通过各种协议传输来的指标项数据并以尽可能高的效率将它们写入磁盘；在接收到指标项时，将指标项值缓存在RAM中，并用底层的Whisper库按照指定的时间间隔将这些值写入磁盘。
+ * **Relay**：有两个不同的用途：将输入的指标项复制并分区。
+ * **Aggregator**：运行于cache前方，在Whisper中记录指标项之前，缓存这些指标项一段时间
+
 == Installing Graphite
 
 === Dependencies
