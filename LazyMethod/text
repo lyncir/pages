@@ -1,0 +1,38 @@
+= LazyMethod
+
+Ref: http://stackoverflow.com/questions/519633/lazy-method-for-reading-big-file-in-python
+
+Read big file piece by piece and after processing each piece store the processed piece into another file and read next piece.
+
+<<code python>>
+def read_in_chunks(file_object, chunk_size=1024):
+    """Lazy function (generator) to read a file piece by piece.
+    Default chunk size: 1k."""
+    while True:
+        data = file_object.read(chunk_size)
+        if not data:
+            break
+        yield data
+
+
+f = open('really_big_file.dat')
+for piece in read_in_chunks(f):
+    process_data(piece)
+<</code>>
+
+Another option would be to use iter and a helper function:
+<<code python>>
+f = open('really_big_file.dat')
+def read1k():
+    return f.read(1024)
+
+for piece in iter(read1k, ''):
+    process_data(piece)
+<</code>>
+
+If the file is line-based, the file object is already a lazy generator of lines:
+
+<<code python>>
+for line in open('really_big_file.dat'):
+    process_data(line)
+<</code>>
