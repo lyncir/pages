@@ -68,6 +68,22 @@ graphite.xml
 </uwsgi>
 <</code>>
 
+or
+
+<<code bash>>
+#!/bin/bash                                                                                                                       
+#graphite project
+UWSGI_SOCK="/tmp/uwsgi.graphite.sock"
+UWSGI_CHDIR="/opt/graphite/conf"
+UWSGI_MODULE="wsgi"
+UWSGI_PROS=6
+UWSGI_LOG="/var/log/uwsgi.graphite.log"
+UWSGI_OPTS="-s $UWSGI_SOCK --chdir $UWSGI_CHDIR --module $UWSGI_MODULE:application --processes $UWSGI_PROS -d $UWSGI_LOG"
+
+
+/usr/local/bin/uwsgi $UWSGI_OPTS
+<</code>>
+
 nginx.conf
 <<code>>
 server {
@@ -77,11 +93,7 @@ server {
 		access_log /var/log/nginx/graphite-web.access_log main;
 		error_log /var/log/nginx/graphite-web.error_log info;
 
-		location /media/admin/ {
-			alias /usr/lib/python2.7/site-packages/django/contrib/admin/media/;
-		}
-
-		location /content/ {
+		location /static/ {
 			alias /opt/graphite/webapp/content/;
 		}
 
@@ -89,4 +101,80 @@ server {
 			include uwsgi_params;
 			uwsgi_pass unix:/tmp/uwsgi.graphite.sock;
 		}
+<</code>>
+
+=== 启动Carbon缓存进程
+
+Carbon安装包中包含了关于端口号和其他多个配置参数的明确缺省值。拷贝这些已有的示例配置文件：
+<<code bash>>
+# cd /opt/graphite/conf
+# cp aggregation-rules.conf.example aggregation-rules.conf
+# cp blacklist.conf.example blacklist.conf
+# cp carbon.conf.example carbon.conf
+# cp carbon.amqp.conf.example carbon.amqp.conf
+# cp relay-rules.conf.example relay-rules.conf
+# cp rewrite-rules.conf.example rewrite-rules.conf
+# cp storage-schemas.conf.example storage-schemas.conf
+# cp storage-aggregation.conf.example storage-aggregation.conf
+# cp whitelist.conf.example whitelist.conf
+# vi carbon.conf
+<</code>>
+
+在cache区段下，接收端口这一行包含一个默认值，用于通过平文本协议（plaintext protocol ）接受输入指标项（如下所示）：
+<<code>>
+[cache]
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = 2003
+<</code>>
+
+执行如下命令，可以启动一个carbon-cache进程：
+<<code bash>>
+# cd /opt/graphite/bin
+# ./carbon-cache.py start
+<</code>>
+
+
+=== 发布指标项
+
+指标项（metric ）是一种随着时间不断变化的可度量的数量.
+
+数据点（datapoint）是包含如下信息的三元组：
+
+ * 指标项名称
+ * 度量值
+ * 时间序列上某个特定的点（通常是一个时间戳）
+
+
+客户端应用程序通过将数据点发送至Carbon进程发布指标项。应用程序在Carbon进程所监听的端口上建立TCP连接，然后以简单平文本格式发送数据点信息。在本文的示例中，这个端口号是2003。这个TCP连接可能会一直处于打开状态并根据需要尽可能多次重复使用。Carbon进程监听输入的数据但是并不会给客户端返回任何响应。
+
+数据点的格式定义如下：
+
+ * 每个数据点是一行文本
+ * 位置0是带点的指标项名称
+ * 位置1是一个值
+ * 位置2是一个Unix时间戳
+ * 空格作为各个位置之间的分隔符
+
+例如，下面是一些有效的数据点：
+
+ * carbon-cache进程每分钟接收到的指标项数量
+ ** carbon.agents.graphite-tutorial.metricsReceived 28198 1400509108
+ * carbon-cache每分钟创建的指标项数量
+ ** carbon.agents.graphite-tutorial.creates 8 1400509110
+ * 示例服务器端点每分钟的p95响应次数
+ ** PRODUCTION.host.graphite-tutorial.responseTime.p95 0.10 1400509112
+
+
+客户端应用程序发布指标项的方式可以有多种：
+
+* 通过像netcat（nc）命令这样的工具，使用平文本协议发布
+* 使用pickle协议
+* 使用高级消息队列协议（AMQP）
+* 用函数库，如Dropwizard Metrics库
+
+<<code bash>>
+yum install nc
+echo "carbon.agents.graphite-tutorial.metricsReceived 28198 `date +%s`" | nc localhost 2003
+echo "carbon.agents.graphite-tutorial.creates 8 `date +%s`" | nc localhost 2003
+echo "PRODUCTION.host.graphite-tutorial.responseTime.p95 0.10 `date +%s`" | nc localhost 2003
 <</code>>
