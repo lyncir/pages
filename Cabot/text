@@ -1,0 +1,183 @@
+= Cabot
+
+repo: https://github.com/arachnys/cabot.git
+
+
+== Install cabot on centos
+
+1. clone Cabot from https://github.com/arachnys/cabot.git to /opt/cabot
+
+<<code bash>>
+cd /opt/
+git clone https://github.com/arachnys/cabot.git
+<</code>>
+
+2. virtualenv
+
+<<code bash>>
+virtualenv /opt/cabot/cabot_env
+source /opt/cabot/cabot_env/bin/active
+<</code>>
+
+3. python setup.py install
+
+<<code bash>>
+(cabot_env)# python setup.py install
+<</code>>
+
+4. copied list of required packages from setup.py to requirements.txt
+replaced psycopg2 with MySQL-python
+
+<<code bash>>
+(cabot_env)# cat requirements.txt 
+Django==1.6.8
+Markdown==2.5
+PyJWT==0.1.2
+South==1.0
+amqp==1.3.3
+anyjson==0.3.3
+argparse==1.2.1
+billiard==3.3.0.13
+celery==3.1.7
+distribute==0.6.24
+dj-database-url==0.2.2
+django-appconf==0.6
+django-celery==3.1.1
+django-celery-with-redis==3.0
+django-compressor==1.4
+django-filter==0.7
+django-jsonify==0.2.1
+django-mptt==0.6.0
+django-polymorphic==0.5.6
+django-redis==1.4.5
+django-smtp-ssl==1.0
+djangorestframework==2.4.2
+gunicorn==18.0
+gevent==1.0.1
+hiredis==0.1.1
+httplib2==0.7.7
+icalendar==3.2
+kombu==3.0.8
+mock==1.0.1
+psycogreen==1.0
+#psycopg2==2.5.1
+pytz==2014.10
+redis==2.9.0
+requests==2.7.0
+six==1.5.1
+twilio==3.4.1
+wsgiref==0.1.2
+python-dateutil==2.1
+django-auth-ldap==1.2.6
+
+(cabot_env)# pip install -r requirements.txt
+<</code>>
+
+5. If you want to use your own smtp server instead of amazon:
+
+<<code bash>>
+$ vim cabot/settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "mail.example.com"
+<</code>>
+
+6. cp conf/production.env.example cp conf/production.env
+
+7. edit production.env
+
+<<code bash>>
+$ vim conf/production.env
+DATABASE_URL=mysql://localhost/cabot
+CELERY_BROKER_URL=redis://localhost:6379/1
+GRAPHITE_API=http://graphite.example.com/
+GRAPHITE_USER=username
+GRAPHITE_PASS=password
+<</code>>
+
+8. Install node:
+
+<<code bash>>
+# yum install gcc-c++
+# wget http://nodejs.org/dist/v0.10.33/node-v0.10.33.tar.gz
+# ./configure
+# make
+# make install
+# npm install -g coffee-script less@1.3 --registry http://registry.npmjs.org/
+<</code>>
+
+9. init cabot
+
+<<code bash>>
+(cabot_env)# sh -ac ' . ./conf/production.env; python manage.py syncdb'
+(cabot_env)# sh -ac ' . ./conf/production.env; python manage.py migrate'
+(cabot_env)# sh -ac ' . ./conf/production.env; python manage.py collectstatic --noinput'
+(cabot_env)# sh -ac ' . ./conf/production.env; python manage.py compress'
+<</code>>
+
+
+10. Setup uwsgi
+
+<<code bash>>
+# vim /etc/init.d/uwsgi.cabot
+#!/bin/bash    
+                                                  
+#cabot project
+UWSGI_SOCK="/tmp/uwsgi.cabot.sock"
+UWSGI_CHDIR="/opt/cabot"
+UWSGI_MODULE="cabot.wsgi"
+UWSGI_PROS=6
+UWSGI_LOG="/var/log/uwsgi.catbot.log"
+UWSGI_OPTS="-s $UWSGI_SOCK --chdir $UWSGI_CHDIR --module $UWSGI_MODULE:application --processes $UWSGI_PROS -d $UWSGI_LOG"
+
+
+/opt/cabot/cabot_env/bin/uwsgi $UWSGI_OPTS
+<</code>>
+
+11. Setup Nginx
+
+<<code bash>>
+    server {
+        listen       5001;
+        server_name  localhost;
+
+        location / {
+            include uwsgi_params;
+            uwsgi_pass unix:/tmp/uwsgi.cabot.sock;
+        }
+        location /static/ {
+            alias /opt/cabot/static/;
+        }
+    }
+<</code>>
+
+12. Setup celery workers
+
+<<code bash>>
+# /opt/cabot/cabot_env/bin/celery multi start worker \
+            -A cabot --pidfile=/tmp/%n.pid \
+            --logfile=/var/logs/celery_%n.log --loglevel="INFO" \
+            -B
+<</code>>
+
+13. cp production.env to production.env.sh and edit every line add export
+
+<<code bash>>
+# more conf/production.env.sh 
+# Plugins to be loaded at launch
+export CABOT_PLUGINS_ENABLED=cabot_alert_hipchat==1.6.1,cabot_alert_twilio==1.1.4,cabot_alert_email==1.3.1
+
+export DATABASE_URL=mysql://localhost/cabot
+export DJANGO_SETTINGS_MODULE=cabot.settings
+export HIPCHAT_URL=https://api.hipchat.com/v1/rooms/message
+export LOG_FILE=/dev/null
+export PORT=5000
+export VENV=/home/ubuntu/venv
+<</code>>
+
+Execute
+<<code bash>>
+# source conf/production.env.sh
+<</code>>
+
+14. goto http://localhost:5001 and see if everything is successfully running
+
