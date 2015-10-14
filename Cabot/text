@@ -155,7 +155,7 @@ UWSGI_OPTS="-s $UWSGI_SOCK --chdir $UWSGI_CHDIR --module $UWSGI_MODULE:applicati
 <<code bash>>
 # /opt/cabot/cabot_env/bin/celery multi start worker \
             -A cabot --pidfile=/tmp/%n.pid \
-            --logfile=/var/logs/celery_%n.log --loglevel="INFO" \
+            --logfile=/var/log/celery_%n.log --loglevel="INFO" \
             -B
 <</code>>
 
