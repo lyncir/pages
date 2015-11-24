@@ -1,3 +1,19 @@
 = SailfishOS 应用开发
 
 ref: https://sailfishos.org/develop/
+
+
+
+== Install popular linux stuff
+
+<<code bash>>
+# pkcon install zypper
+
+# zypper ar -f http://sailfish.openrepos.net/NielDK/personal-main.repo
+
+# rpm --import http://sailfish.openrepos.net/openrepos.key
+
+# zypper refresh
+
+# zypper install wget
+<</code>>
