@@ -1,0 +1,17 @@
+= Git
+
+== Git config
+
+gitconfig
+
+<<code ini>>
+[alias]
+ll = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%an, %cr)' --abbrev-commit
+<</code>>
+
+== Git use
+
+1. 查看commit log中的修改
+<<code git>>
+git ll -p
+<</code>>

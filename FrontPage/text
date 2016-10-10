@@ -6,6 +6,9 @@
 
 * Python
 ** [[PEP8|PEP8 -- Style Guide for Python Code]]
+** [[PEP0257|PEP 0257 -- Docstring Conventions]]
+** [[PEP0287|PEP 0287 -- reStructuredText Docstring Format]]
+** [[Pythonic|Pythonic]]
 ** [[PEP3143|PEP3143 -- Standard daemon process library]]
 ** [[DeployPythonApp|部署Python应用]]
 ** [[ParallelismInOneLine|Python并行任务技巧]]
@@ -26,7 +29,18 @@
 ** [[RetriesInRequests|Retries in Requests]]
 ** [[ExploreFlask|Explore Flask ]]
 ** [[LazyMethod|Lazy Method ]]
+** [[SQLAlchemy|SQLAlchemy]]
+** [[PythonSnippets|Python Snippets]]
 
+
+* Tools
+** [[Vim|Vim]]
+** [[Git|Git]]
+** [[Tmux|Tmux]]
+
+
+* FP
+** [[Haskell|Haskell 基础]]
 
 
 * 算法
@@ -58,6 +72,7 @@
 ** [[Remember]]
 
 * Ref
+** [[http://www.linuxtopia.org/online_books/programming_books/python_programming/index.html | Building Skills in Python]]
 ** [[http://blog.xway.me/]] Xway Blog
 ** [[http://amask.net]] Amas Blog
 ** [[http://weekly.pychina.org/]] 蟒周刊

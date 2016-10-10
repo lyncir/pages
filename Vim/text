@@ -1,0 +1,111 @@
+= Vim
+
+== Help
+
+=== man help file
+
+1. 使用"k","j","h","l"上下左右移动，也可以使用↑↓← →。
+<<code>>
+                                                                k
+Move around:  Use the cursor keys, or "h" to go left,         h   l
+              "j" to go down, "k" to go up, "l" to go right.    j
+
+<</code>>
+
+2. 退出当前窗口
+<<code>>
+Close this window:  Use ":q<Enter>".
+<</code>>
+
+3. 使用鼠标
+<<code>>
+With the mouse:  ":set mouse=a" to enable the mouse (in xterm or GUI).
+<</code>>
+
+4. 进入一个主题和返回
+<<code>>
+Jump to a subject:  Position the cursor on a tag (e.g. bars) and hit CTRL-].
+        Jump back:  Type CTRL-T or CTRL-O (repeat to go further back).
+<</code>>
+
+=== Left-right motions
+
+<<code>>
+0          0            to first character in the line (also: <Home> key)
+^          ^            to first non-blank character in the line
+$       N  $            to the last character in the line (N-1 lines lower)
+                           (also: <End> key)
+g0         g0           to first character in screen line (differs from "0"
+                           when lines wrap)
+g^         g^           to first non-blank character in screen line (differs
+                           from "^" when lines wrap)
+g$      N  g$           to last character in screen line (differs from "$"
+gm         gm           to middle of the screen line
+
+# 0 到行头
+# ^ 到本行第一个不是blank字符的位置
+# $ 到行尾
+<</code>>
+
+=== Up-down motions
+
+<<code>>
+G       N  G            goto line N (default: last line), on the first                                                                                                     
+                           non-blank character
+gg      N  gg           goto line N (default: first line), on the first
+                           non-blank character
+<</code>>
+
+=== Multi-window commands
+
+<<code>>
+CTRL-W_s        CTRL-W s  or  :split    split window into two parts
+CTRL-W_j        CTRL-W j                move cursor to window below
+CTRL-W_k        CTRL-W k                move cursor to window above
+CTRL-W_CTRL-W   CTRL-W CTRL-W           move cursor to window below (wrap)
+CTRL-W_q        CTRL-W q  or  :q[uit]   quit editing and close window
+
+# 分割成两个窗口
+# 移动光标到下个窗口
+# 移动光标到上个窗口
+# 移动光标到下个窗口（循环）
+# 退出编辑并关闭窗口
+<</code>>
+
+=== Visual mode
+
+<<code>>
+v        v              start highlighting characters  }  move cursor and use
+V        V              start highlighting linewise    }  operator to affect
+CTRL-V   CTRL-V         start highlighting blockwise   }  highlighted text
+
+# v 字符选择
+# V 行选择
+# CTRL-v 块选择
+
+# 配合使用: d(delete),y(yank),c(delete and change to insert mode),I(insert)
+<</code>>
+
+=== Scrolling
+
+<<code>>
+CTRL-F          N  CTRL-F       window N pages Forwards (downwards)
+CTRL-B          N  CTRL-B       window N pages Backwards (upwards)
+z.                 z.    or zz  redraw, current line at center of window
+
+# CTRL-F 向下翻一页
+# CTRL-B  向上翻一页
+# zz 居中当前行
+<</code>>
+
+
+== Vim 配置
+
+1. 粘贴时取消缩进
+
+<<code>>
+:set paste
+
+# paste, then
+set nopaste
+<</code>>

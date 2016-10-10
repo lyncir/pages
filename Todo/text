@@ -22,3 +22,55 @@
 # Explore Flask [[https://exploreflask.com/index.html]]
 
 # [[http://www.linuxtopia.org/online_books/programming_books/python_programming/index.html]]
+
+# google hosts [[http://laod.cn/hosts/2016-google-hosts.html]]
+
+
+
+
+## 项目开发流程
+
+<<code bash>>
+# 获取主干最新代码
+$ git clone <repo>
+$ git checkout develop # 开发分支
+$ git pull # 同步分支
+
+# 新建一个开发分支my_feature
+$ git checkout -b feature/my_feature
+
+# 确认已切换到当前分支
+$ git branch
+
+# 保存所有的修改变化
+$ git add --all
+# 查看发生变动的文件
+$ git status
+ 
+# 编辑备注
+$ git commit -m "implement api architecture"
+# 将分支代码push到服务器
+$ git push origin -u feature/my_feature
+
+# 分支开发过程中，为了减少冲突，尽量要多与主干同步
+$ git fetch origin
+$ git rebase origin/develop
+$ git add .  # 解决冲突后add
+$ git rebase --continue
+
+#删除分支
+$ git branch -d feature/my_feature
+
+#取消commit
+git reset --hard <commit log>
+<</code>>
+
+ 2. 使用stash merge
+ 3. jira提交resolve
+
+http://58.23.5.118:8090/pages/viewpage.action?pageId=2949210
+
+
+http://v2ex.com/t/281983#reply5
+
+http://fangzi.xmfish.com/web/info_hire_2FF79D55-38E7-EC08-0DC4-D6B49C286FB8.html#448503

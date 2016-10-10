@@ -1,0 +1,6 @@
+= Tmux
+
+Ctrl-a % 垂直分割
+Ctrl-a "  水平分割
+Ctrl-a c 创建
+Ctrl-a num 跳转

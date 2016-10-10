@@ -17,3 +17,18 @@ ref: https://sailfishos.org/develop/
 
 # zypper install wget
 <</code>>
+
+== install google play
+
+
+# Enable Jolla Developer Mode and allow SSH-connection.
+# Download [[SailfishOS/uploads/gapps-jb-20121011-signed.zip|gapps-jb-20121011-signed.zip]] and extract it.
+# Plug your Jolla with USB to computer in normal mode.
+# Copy system-folder from your extract files to Jolla.
+# Open SSH-connection to your phone and login.
+# Write “devel-su” and press enter. After that, write your password.
+# Write command: rsync -av –ignore-existing /home/nemo/system /opt/alien
+# Reboot phone
+# Install [[SailfishOS/uploads/com.google.android.gms-(3.1.36).apk|Google Play services]] to Jolla
+# Install [[SailfishOS/uploads/Phonesky.apk|Google Play Store]] to Jolla
+# Start Play Store and do updates.

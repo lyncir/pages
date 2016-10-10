@@ -1,0 +1,47 @@
+= SQLAlchemy 
+
+== Python ORM
+
+ * [[http://sqlobject.org/|SQLObject]]
+ * [[https://storm.canonical.com/|Storm]]
+ * [[https://www.djangoproject.com/|Django ORM]]
+ * [[https://github.com/coleifer/peewee|peewee]]
+ * [[http://www.sqlalchemy.org/|SQLAlchemy]]
+
+
+=== Django ORM 命令集
+
+<<code python>>
+class Person(models.Model):
+    
+
+<</code>>
+
+<<code python>>
+# 所有对象
+>>> Question.objects.all()
+[<Question: 御姐控还是萝莉控？>, <Question: 要问什么问题呢？>]
+
+# 筛选对象
+>>> Question.objects.filter(id=7)
+[<Question: 御姐控还是萝莉控？>]
+
+## 包含某字段
+>>> Question.objects.filter(question_text__contains='up')
+[<Question: what's up?>]
+
+# 对象排序
+>>> Question.objects.order_by('pub_date')
+[<Question: 御姐控还是萝莉控？>, <Question: 要问什么问题呢？>, <Question: what's up?>]
+
+## 反向排序
+>>> Question.objects.order_by('-pub_date')
+[<Question: what's up?>, <Question: 要问什么问题呢？>, <Question: 御姐控还是萝莉控？>]
+
+# 返回的类似列表和字典的形式
+>>> Blog.objects.values()
+[{'id': 1, 'name': 'Beatles Blog', 'tagline': 'All the latest Beatles news.'}]
+>>> Blog.objects.values('id', 'name')
+[{'id': 1, 'name': 'Beatles Blog'}]
+
+<</code>>
