@@ -12,6 +12,56 @@ ll = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(cyan)%d%Creset %s %Cgr
 == Git use
 
 1. 查看commit log中的修改
-<<code git>>
-git ll -p
+<<code bash>>
+$ git ll -p
+<</code>>
+
+2. git生产patch和使用patch
+<<code bash>>
+$ git diff > /tmp/patch.txt
+$ git apply /tmp/patch.txt
+<</code>>
+
+3. 查看消失的log并撤销rebase
+<<code bash>>
+# undo git rebase
+$ git reflog
+$ git reset --hard HEAD@{5}
+<</code>>
+
+== 项目开发流程
+
+<<code bash>>
+# 获取主干最新代码
+$ git clone <repo>
+$ git checkout develop # 开发分支
+$ git pull # 同步分支
+
+# 新建一个开发分支my_feature
+$ git checkout -b feature/my_feature
+
+# 确认已切换到当前分支
+$ git branch
+
+# 保存所有的修改变化
+$ git add --all
+# 查看发生变动的文件
+$ git status
+ 
+# 编辑备注
+$ git commit -m "implement api architecture"
+# 将分支代码push到服务器
+$ git push origin -u feature/my_feature
+
+# 分支开发过程中，为了减少冲突，尽量要多与主干同步
+$ git fetch origin
+$ git rebase origin/develop
+$ git add .  # 解决冲突后add
+$ git rebase --continue
+
+#删除分支
+$ git branch -d feature/my_feature
+
+#取消commit
+$ git reset --hard <commit log>
 <</code>>

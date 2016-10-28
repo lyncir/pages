@@ -109,3 +109,12 @@ z.                 z.    or zz  redraw, current line at center of window
 # paste, then
 set nopaste
 <</code>>
+
+== Vim 常用组合命令
+
+1. diff显示颜色
+<<code bash>>
+$ diff -ur a b | vim -R -
+<</code>>
+
+当然也可以使用##colordiff##
