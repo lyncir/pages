@@ -1,0 +1,18 @@
+= patch
+
+== Usage
+
+* **-p0** : 选项要从当前目录查找目的文件
+* **-p1** : 选项要忽略掉第一层目录，从当前目录开始查找
+
+== Example
+
+1. 单文件
+<<code bash>>
+$ patch -p0 < patch.txt
+<</code>>
+
+2. 目录
+<<code bash>>
+$ patch -p1 < patch.txt
+<</code>>

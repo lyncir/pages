@@ -1,0 +1,14 @@
+= diff
+
+== Usage
+
+* **-r**: 选项递归
+* **-u**: 选项以统一的格式创建补丁
+* **-N**: 选项确保补丁文件将正确地处理已经创建或删除文件的情况
+
+== Example
+
+1. 创建补丁文件
+<<code bash>>
+$ diff -Nur a.txt b.txt > patch.txt
+<</code>>
