@@ -29,6 +29,21 @@ $ git reflog
 $ git reset --hard HEAD@{5}
 <</code>>
 
+4. 撤销未提交的更改
+<<code bash>>
+# show what will be deleted
+$ git clean -n
+
+# To remove directories
+$ git clean -f -d
+
+# To remove ignored files
+$ git clean -f -X
+
+# To remove ignored and non-ignored files
+$ git clean -f -x
+<</code>>
+
 == 项目开发流程
 
 <<code bash>>
@@ -64,4 +79,17 @@ $ git branch -d feature/my_feature
 
 #取消commit
 $ git reset --hard <commit log>
+<</code>>
+
+== git svn
+
+<<code bash>>
+# 克隆
+$ git svn clone url 
+
+# 同步远程svn 服务器
+$ git svn rebase
+
+# 推送到远程svn服务器
+$ git svn dcommit
 <</code>>

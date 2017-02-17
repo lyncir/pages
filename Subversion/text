@@ -1,0 +1,15 @@
+= Subversion
+
+== 常用命令
+
+<<code>>
+1. 取消未提交的修改
+svn revert [file] -R [dir]
+
+2. 添加文件并提交
+svn add [file]
+svn commit -m "xxx commit"
+
+3. 更新文件
+svn update
+<</code>>

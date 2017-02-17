@@ -1,37 +1,16 @@
 = To Do
 
-项目: 
-* blog [[git@lyncir.com:flask_blog_new.git]]
-* py_autossh [[git@lyncir.com:py_autossh.git]]
-* kaoqin [[git@lyncir.com:kaoqin.git]]
-
-
-* [[http://legacy.python.org/dev/peps/pep-0008/|PEP 8 -- Style Guide for Python Code ]]
-* [[http://www.fullstackpython.com|Full Stack Python]]
-* [[http://www.infoq.com/cn/news/2014/09/heroku-http-design-guide|Heroku的HTTP API设计指南]]
-* [[http://vdisk.weibo.com/s/vbB7ChuMGGzW/1409020353| Linux 性能工具]]
-* [[https://www.frozentux.net/iptables-tutorial/cn/iptables-tutorial-cn-1.1.19.html|Iptables 指南]]
-* [[http://nginx.com/blog/tuning-nginx/|nginx tunning]]
 * [[Todo/uploads/shadowsocks.apk|shadowsocks.apk]]
 
 # Gevent
-# RESTful API
-# AMQP
-# metaclass 和 descriptor [[http://v2ex.com/t/143580#reply6]]
-
+# Twisted
 # Explore Flask [[https://exploreflask.com/index.html]]
-
 # [[http://www.linuxtopia.org/online_books/programming_books/python_programming/index.html]]
 
-# google hosts [[http://laod.cn/hosts/2016-google-hosts.html]]
 
+== work
 
- 2. 使用stash merge
- 3. jira提交resolve
+* [[http://192.168.1.17:8100/index.html|API Doc]]
+* [[https://192.168.1.14/svn/games2/Qing2/|svn co]]
+* [[https://tower.im/teams/44f684e540744fad9c7bdcd898f40caf/projects/ | tower.im]]
 
-http://58.23.5.118:8090/pages/viewpage.action?pageId=2949210
-
-
-http://v2ex.com/t/281983#reply5
-
-http://fangzi.xmfish.com/web/info_hire_2FF79D55-38E7-EC08-0DC4-D6B49C286FB8.html#448503

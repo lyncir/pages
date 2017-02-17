@@ -1,0 +1,36 @@
+= VS Code
+
+== user config
+
+1. 安装[[https://git-for-windows.github.io/|Git for Window]]
+2. 使用##ssh-keygen -t rsa##生成公私钥
+3. 复制##.ssh/id_rsa.pub##到linux服务器的##.ssh/authorized_keys##
+4. 修改权限##chmod 600 authorized_keys##
+5. 测试连通##ssh 192.168.6.148 -l lyncir##
+
+<<code>>
+// 将设置放入此文件中以覆盖默认设置
+{
+  // 终端在 Windows 上使用的 shell 的路径。使用随 Windows 一起提供的 shell 时(cmd、PowerShell 或 Ubuntu 上的 Bash)，相对 C:\Windows\System32，首选 C:\Windows\sysnative 以使用 64 位版本。
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\git-cmd.exe",
+
+  // 在 Windows 终端上时使用的命令行参数。
+  "terminal.integrated.shellArgs.windows": ["ssh", "192.168.6.148", "-l", "lyncir"],
+}
+<</code>>
+
+== key mapping
+
+<<code>>
+Ctrl-~ 切换终端
+
+Ctrl-\ 分屏
+Ctrl-1,2,3 切换分屏
+
+Ctrp-p 快速搜素文件并打开
+
+Ctrl-b 显示隐藏side bar
+
+Ctrl-/ 切换行注释
+Alt-Shift-A 切换块注释
+<</code>>

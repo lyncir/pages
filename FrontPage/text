@@ -37,7 +37,9 @@
 * Tools
 ** [[Vim|Vim]]
 ** [[Git|Git]]
+** [[Subversion|Svn]]
 ** [[Tmux|Tmux]]
+** [[VSCode|VS Code]]
 
 
 * FP
@@ -57,6 +59,7 @@
 ** [[ManHistory|Linux命令 - history]]
 ** [[ManDiff|Linux命令 - diff]]
 ** [[ManPatch|Linux命令 - patch]]
+** [[ManTcpdump|Linux命令 - tcpdump]]
 
 
 * DevOps
@@ -70,6 +73,7 @@
 
 * Project
 ** [[SailfishOS|SailfishOS 应用开发]]
+** [[Firefly|Firefly 游戏开发]]
 
 * Other
 ** [[Remember]]

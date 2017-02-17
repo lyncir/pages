@@ -114,3 +114,33 @@ b = np.array(b)
 x = np.linalg.solve(a, b)
 array([ 7.,  1., -2.])
 <</code>>
+
+7. 全局变量
+<<code python>>
+class Singleton(type):
+
+    def __init__(self, name, bases, dic):
+        super(Singleton, self).__init__(name, bases, dic)
+        self.instance = None
+
+    def __call__(self, *args, **kwagrs):
+        if self.instance is None:
+            self.instance = super(Singleton, self).__call__(*args, **kwagrs)
+        return self.instance
+
+
+class GlobalObject:
+
+    __metaclass__ = Singleton
+
+    def __init__(self):
+        self.name = None
+<</code>>
+
+8. 初始defaultdict数值
+<<code python>>
+from collections import defaultdict
+
+a = defaultdict(lambda: [0, 0.0])
+a['test'][0] += 5
+<</code>>

@@ -1,0 +1,7 @@
+= Tcpdump
+
+== Usage
+
+<<code bash>>
+$ tcpdump -s 0 -U -n -w - -i wlan0 not port 22 -w file.dmp
+<</code>>

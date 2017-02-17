@@ -1,1 +1,98 @@
 = PEP 0287 -- reStructuredText Docstring Format
+
+http://sphinx-doc-zh.readthedocs.io/en/latest/contents.html
+
+== rSt文档注释示例
+
+=== title
+
+<<code python>>
+# -*- coding: utf-8 -*-
+"""
+    flask.helpers
+    ~~~~~~~~~~~~~
+
+    Implements various helpers.
+
+    :copyright: (c) 2015 by Armin Ronacher.
+    :license: BSD, see LICENSE for more details.
+"""
+<</code>>
+
+=== comment
+1. 类里面的属性注释
+<<code python>>
+#: the salt that should be applied on top of the secret key for the
+#: signing of cookie based sessions.
+salt = 'cookie-session'
+#: the hash function to use for the signature.  The default is sha1
+digest_method = staticmethod(hashlib.sha1)
+#: the name of the itsdangerous supported key derivation.  The default
+#: is hmac.
+key_derivation = 'hmac'
+<</code>>
+
+2. 普通注释
+<<code python>>
+# Delete case.  If there is no session we bail early.
+# If the session was modified to be empty we remove the
+# whole cookie.
+if not session:
+    if session.modified:
+        response.delete_cookie(app.session_cookie_name,
+                               domain=domain, path=path)
+    return
+
+# Modification case.  There are upsides and downsides to
+# emitting a set-cookie header each request.  The behavior
+# is controlled by the :meth:`should_set_cookie` method
+# which performs a quick check to figure out if the cookie
+# should be set or not.  This is controlled by the
+# SESSION_REFRESH_EACH_REQUEST config flag as well as
+# the permanent flag on the session itself.
+if not self.should_set_cookie(app, session):
+    return
+<</code>>
+
+=== if...else
+
+<<code python>>
+# If request specific information is available we have some extra
+# features that support "relative" URLs.
+if reqctx is not None:
+    pass
+
+# Otherwise go with the url adapter from the appctx and make
+# the URLs external by default.
+else:
+    pass
+<</code>>
+
+=== todo
+
+<<code python>>
+# TODO: get rid of this deprecated functionality in 1.0
+<</code>>
+
+=== class
+
+<<code python>>
+Please never pass filenames to this function from user sources;
+you should use :func:`send_from_directory` instead.
+
+.. versionadded:: 0.2
+
+.. versionadded:: 0.5
+   The `add_etags`, `cache_timeout` and `conditional` parameters were
+   added.  The default behavior is now to attach etags.
+
+.. versionchanged:: 0.7
+   mimetype guessing and etag support for file objects was
+   deprecated because it was unreliable.  Pass a filename if you are
+   able to, otherwise attach an etag yourself.  This functionality
+   will be removed in Flask 1.0
+
+:param mimetype: the mimetype of the file if provided. If a file path is
+                 given, auto detection happens as fallback, otherwise an
+                 error will be raised.
+<</code>>
