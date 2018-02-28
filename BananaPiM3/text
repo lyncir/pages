@@ -1,0 +1,112 @@
+= gentoo on Banana Pi M3
+
+== get docker
+
+<<code bash>>
+$ docker pull sinovoip/bpi-build:ubuntu12.04
+$ docker run -t -i sinovoip/bpi-build:ubuntu12.04 /bin/bash
+<</code>>
+
+== build BPI-M3-bsp
+
+<<code bash>>
+$ git clone https://github.com/BPI-SINOVOIP/BPI-M3-bsp.git
+$ cd BPI-M3-bsp
+$ mkdir -p linux-sunxi/output/lib/firmware
+$ ./build.sh
+<</code>>
+
+== burn u-boot to SD card
+
+if SD is ##/dev/sdb##
+
+<<code bash>>
+cd BPI-M3-bsp/output/BPI_M3_720P/pack/
+
+dd if=boot0_sdcard.fex of=/dev/sdb bs=1k seek=8
+dd if=u-boot.fex of=/dev/sdb bs=1k seek=19096
+dd if=sunxi_mbr.fex of=/dev/sdb bs=1k seek=20480
+dd if=boot-resource.fex of=/dev/sdb bs=1k seek=36864
+dd if=env.fex of=/dev/sdb bs=1k seek=69632
+<</code>>
+
+== format the partitions with a file system
+
+<<code bash>>
+$ fdisk -l
+
+Device    Boot     Start       End   Blocks  Id System
+/dev/sdb1 *       204800    729087   262144   c W95 FAT32 (LBA)
+/dev/sdb2         729088  15269887  7270400  83 Linux
+
+$ mkfs.vfat -F 32 /dev/sdb1
+$ mkfs.ext4 /dev/sdb2
+
+$ mkdir /mnt/bananapi/{boot,root} -p
+$ mount /dev/sdb1 /mnt/bananapi/boot
+$ mount /dev/sdb2 /mnt/bananapi/root
+<</code>>
+
+== preparation for booting
+
+<<code bash>>
+$ cp -R SD/BPI-BOOT/bananapi /mnt/bananapi/boot
+
+$ tar xvjpf stage3-armv7a_hardfp-latest.tar.bz2 -C /mnt/bananapi/root/
+
+$ cp -R SD/BPI-ROOT/lib/modules /mnt/bananapi/root/lib
+$ tar xjvpf portage-latest.tar.bz2 -C /mnt/bananapi/root/usr
+<</code>>
+
+== Optional
+
+=== network
+
+<<code bash>>
+# vim /mnt/bananapi/root/etc/conf.d/net
+config_eth0="<your IP> netmask <your netmask>"
+routes_eth0="default via <your router IP>"
+dns_servers_eth0="<nameserver IP>"
+
+# cd /mnt/bananapi/root/etc/init.d
+# ln -s net.lo net.eth0
+# cd /mnt/bananapi/root/etc/runlevels/default
+# ln -s /etc/init.d/net.eth0
+<</code>>
+
+=== hostname
+
+<<code bash>>
+# vim /mnt/bananapi/root/etc/conf.d/hostname
+hostname="bpi-m3"
+<</code>>
+
+=== sshd startup
+
+<<code bash>>
+# echo "PermitRootLogin yes" >> /mnt/bananapi/root/etc/sshd/sshd_config
+
+# cd /mnt/bananapi/root/etc/runlevels/default
+# ln -s /etc/init.d/sshd
+<</code>>
+
+=== clock
+
+<<code bash>>
+# cd /mnt/bananapi/root/etc/runlevels/boot
+# unlink hwclock 
+# ln -s /etc/init.d/swclock 
+
+# ls /usr/share/zoneinfo
+# echo "Your_Country/YOUR_TIMEZONE" > /mnt/bananapi/root/etc/timezone
+<</code>>
+
+=== set root passwd
+
+<<code bash>>
+# openssl passwd -1
+
+Add the hash to the /etc/shadow file
+root:<hash_output>:10770:0:::::
+<</code>>
+Add the hash to the /etc/shadow file

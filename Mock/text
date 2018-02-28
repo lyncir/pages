@@ -1,0 +1,156 @@
+= Mock
+
+== Mock类的方法
+
+=== init
+<<code python>>
+Mock.__init__(self, spec=None, side_effect=None, return_value=sentinel.DEFAULT, wraps=None, name=None, spec_set=None, parent=None, _spec_state=None, _new_name='', _new_parent=None, **kwargs)
+<</code>>
+
+1. name
+定义Mock唯一标识
+
+2. spec
+设置Mock的属性
+<<code python>>
+fooSpec = ["_fooValue", "callFoo", "doFoo"]
+mockFoo = Mock(spec = fooSpec)
+
+# or
+class Foo(object):
+    _fooValue = 123
+    
+    def callFoo(self):
+        print "Foo:callFoo_"
+    
+    def doFoo(self, argValue):
+        print "Foo:doFoo:input = ", argValue    
+mockFoo = Mock(spec = Foo)
+<</code>>
+
+3. return_value
+被调用时的返回
+<<code python>>
+mockFoo = Mock(return_value = 456)
+# <Mock id='2787568'>
+
+mockObj = mockFoo()
+print mockObj
+# returns: 456
+<</code>>
+
+也可以是类
+<<code python>>
+# The mock object
+class Foo(object):
+    # instance properties
+    _fooValue = 123
+    
+    def callFoo(self):
+        print "Foo:callFoo_"
+    
+    def doFoo(self, argValue):
+        print "Foo:doFoo:input = ", argValue
+
+# creating the mock object
+fooObj = Foo()
+print fooObj
+# returns: <__main__.Foo object at 0x68550>
+
+mockFoo = Mock(return_value = fooObj)
+print mockFoo
+# returns: <Mock id='2788144'>
+
+# creating an "instance"
+mockObj = mockFoo()
+print mockObj
+# returns: <__main__.Foo object at 0x68550>
+
+# working with the mocked instance
+print mockObj._fooValue
+# returns: 123
+mockObj.callFoo()
+# returns: Foo:callFoo_
+mockObj.doFoo("narf")
+# returns: Foo:doFoo:input =  narf
+<Mock id='428560'>
+<</code>>
+
+4. side_effect
+返回结果时覆盖return_value
+<<code python>>
+# The mock object
+class Foo(object):
+    # instance properties
+    _fooValue = 123
+    
+    def callFoo(self):
+        print "Foo:callFoo_"
+    
+    def doFoo(self, argValue):
+        print "Foo:doFoo:input = ", argValue
+
+# creating the mock object (with a side effect)
+fooObj = FooSpec()
+
+fooList = [665, 666, 667]
+mockFoo = Mock(return_value = fooObj, side_effect = fooList)
+
+fooTest = mockFoo()
+print fooTest
+# returns 665
+
+fooTest = mockFoo()
+print fooTest
+# returns 666
+
+fooTest = mockFoo()
+print fooTest
+# returns 667
+
+fooTest = mockFoo()
+print fooTest
+# raises: StopIteration
+<</code>>
+
+== Example
+
+1. 修改函数返回值
+<<code python>>
+def get_cur_time():
+    pass
+
+# test_example.py
+import mock
+
+
+def test_some_func():
+    with mock.patch('get_cur_time', return_value=new_time):
+        # assert value
+        pass
+<</code>>
+
+2. 修改类方法返回值
+<<code python>>
+class SomeProductionProcess(CustomCachedSingleTon):
+
+    def loaddata():
+        """
+        Uses an iterator over a large file in Production for the Data pipeline.
+        """
+        pass
+
+# test_example.py
+import mock
+
+
+def new_loaddata(cls, *args, **kwargs):
+    # Your custom testing override
+    return 1
+
+
+def test_SomeProductionProcess():
+    with mock.patch.object(SomeProductionProcess, 'loaddata', new=new_loaddata):
+        obj = SomeProductionProcess()
+        obj.loaddata()  # This will call your mock method
+<</code>>

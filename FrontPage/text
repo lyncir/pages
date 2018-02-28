@@ -32,6 +32,12 @@
 ** [[SQLAlchemy|SQLAlchemy]]
 ** [[PythonSnippets|Python Snippets]]
 ** [[BitOperation|按位运算的应用]]
+** [[Pytest|pytest单元测试]]
+** [[Mock|Mock python测试库]]
+
+* Python3
+** [[Python3UnpackingGeneralizations|python3解包操作推广]]
+** [[Python3AsynchronousComprehensionsGenerators| python3异步解析式/生成器]]
 
 
 * Tools
@@ -40,6 +46,11 @@
 ** [[Subversion|Svn]]
 ** [[Tmux|Tmux]]
 ** [[VSCode|VS Code]]
+
+
+* 分布式
+** [[Zookeeper|Zookeeper 分布式服务框架]]
+** [[Etcd|Etcd]]
 
 
 * FP
@@ -76,14 +87,23 @@
 ** [[Firefly|Firefly 游戏开发]]
 
 * Other
+** [[PythonLibrary|Pyhton第三方库]]
+** [[PyOtherSide|PyOtherSide]]
 ** [[Remember]]
+
+* Arm
+** [[BananaPiM3|Gentoo on Banana Pi M3]]
+
+* OS
+** [[Gentoo|Gentoo]]
+** [[FreeBSD|FreeBSD]]
 
 * Ref
 ** [[http://www.linuxtopia.org/online_books/programming_books/python_programming/index.html | Building Skills in Python]]
-** [[http://blog.xway.me/]] Xway Blog
-** [[http://amask.net]] Amas Blog
 ** [[http://weekly.pychina.org/]] 蟒周刊
 ** [[http://segmentfault.net/t/python/blogs]] SF python
 ** [[http://www.pythontutor.com/visualize.html#mode=edit|pythontutor]]
 
 [[Todo| To Do]]
+
+[[BookMarks|书签]]

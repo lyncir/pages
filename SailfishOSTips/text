@@ -1,0 +1,31 @@
+= SailfishOS 问题集
+
+== 重启键盘
+
+普通用户运行:
+<<code bash>>
+$ systemctl --user restart maliit-server.service
+<</code>>
+
+root用户运行:
+<<code bash>>
+# killall maliit-server
+<</code>>
+
+
+== 使用usb连接jolla
+
+=== windows
+
+1. 连接usb为开发者模式
+2. 修改Remote NDIS网络的ip为同一网段
+3. 使用putty或xshell远程登录
+
+=== linux
+
+同windows的1,2步骤
+<<code bash>>
+# ifconfig usb0 inet 192.168.2.14
+
+# ssh nemo@192.168.2.15
+<</code>>

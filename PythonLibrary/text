@@ -1,0 +1,11 @@
+= Python 第三方库
+
+个人收集的python第三方库
+
+* [[https://github.com/asweigart/pyautogui|pyautogui]] python的GUI自动化工具
+* [[https://github.com/Qix-/better-exceptions|better-exceptions]] 更好的except提示
+* [[http://www.python-requests.org/en/master/|Requests]] 更符合人类的http库
+* [[http://www.sqlalchemy.org/|SQLAlchemy]]
+* [[https://github.com/crsmithdev/arrow|Arrow]] 更好的时间处理库
+* [[http://docs.peewee-orm.com/en/latest/|Peewee]]
+* [[http://artem.krylysov.com/blog/2015/09/29/benchmark-python-json-libraries/|json库]]

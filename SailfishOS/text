@@ -2,6 +2,8 @@
 
 ref: https://sailfishos.org/develop/
 
+[[SailfishSilica|Sailfish Silica]]
+
 
 
 == Install popular linux stuff
@@ -32,3 +34,73 @@ ref: https://sailfishos.org/develop/
 # Install [[SailfishOS/uploads/com.google.android.gms-(3.1.36).apk|Google Play services]] to Jolla
 # Install [[SailfishOS/uploads/Phonesky.apk|Google Play Store]] to Jolla
 # Start Play Store and do updates.
+
+
+== 连接MerSDK-SailfishOS-i486
+
+<<code>>
+ssh公钥连接 127.0.0.1:2222
+username: root
+pub: C:\\SailfishOS\vmshare\ssh\private_keys\engine\root
+<</code>>
+
+=== install python3
+
+<<code bash>>
+# zypper ar -f  http://repo.merproject.org/obs/mer-python3/latest_i486/ mer-python3
+# zypper in python3-base
+# zypper in python3-devel
+# zypper in pyotherside-qml-plugin-python3-qt5
+<</code>>
+
+=== github example
+
+[[https://github.com/dasimmet/Sailfish-Python.git| Sailfish-Python]]
+
+<<code qml>>
+    Python {
+        id: python
+
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('.'));
+            setHandler('progress', function(ratio) {
+                dlprogress.value = ratio;
+            });
+            setHandler('finished', function(newvalue) {
+                page.downloading = false;
+                mainLabel.text = 'Color is ' + newvalue + '.';
+            });
+
+            importModule('datadownloader', function () {});
+        }
+
+        function startDownload() {
+            page.downloading = true;
+            dlprogress.value = 0.0;
+            call('datadownloader.downloader.download', function() {});
+        }
+    }
+<</code>>
+
+1. 主线程尽量避免慢操作，以免阻塞，建议使用##asyncio##
+
+== update os
+
+<<code bash>>
+$ devel-su               ## Use your SSH password here
+# ssu release 2.1.0.11   ## Your target OS version - change if needed
+# version --dup
+<</code>>
+
+== update packages
+
+<<code bash>>
+# ssu status
+# ssu domain
+# ssu re
+# ssu lr
+
+# pkcon refresh -p -v
+or
+# zypper -v ref -f
+<</code>>

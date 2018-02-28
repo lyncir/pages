@@ -1,0 +1,92 @@
+= Gentoo
+
+== 基础设置
+
+=== 新建用户
+
+<<code bash>>
+# useradd -m -G users,wheel,audio username
+<</code>>
+
+=== 时区
+
+<<code base>>
+# ls /usr/share/zoneinfo
+# echo "Asia/Shanghai" > /etc/timezone
+# emerge --config sys-libs/timezone-data
+<</code>>
+
+=== 同步时间
+
+<<code bash>>
+# emerge -av htpdate
+# htpdate -s www.freebsd.org
+<</code>>
+
+=== 同步 portpage
+
+<<code bash>>
+# emerge --sync
+<</code>>
+
+=== 中文设置
+
+<<code bash>>
+# vim /etc/locale.gen
+en_US ISO-8859-1
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+zh_CN.GBK GBK
+
+# locale-gen
+
+# vim /etc/env.d/02locale
+LANG="en_US.UTF-8"
+LC_COLLATE="C"
+LC_CTYPE=zh_CN.UTF-8
+
+# env-update
+<</code>>
+
+== Tips
+
+=== emerge boost error
+
+确保 ##make.conf## 的 ##MAKEOPTS="-j1"##
+
+=== mount xfs bad version
+
+在旧的内核(如3.4.10)使用##xfsprogs##(大于3.3.7)出现mount错误时，需要统一##xfs##版本
+
+<<code bash>>
+# mkfs.xfs -m crc=0 -n ftype=0 -f /dev/sdX
+<</code>>
+
+=== upgrade portage
+
+当很久没更新portage时，更新portage
+<<code bash>>
+# emerge -a1O portage
+<</code>>
+
+=== 安装指定版本
+
+<<code bash>>
+# emerge -av "=dev-db/mysql-5.7.17"
+
+# emerge -av "python:3.6"
+<</code>>
+
+=== 没有pip3.6
+
+<<code bash>>
+# wget https://bootstrap.pypa.io/get-pip.py
+# python3.6 get-pip.py
+<</code>>
+
+=== emerge和python-exec问题
+
+<<code bash>>
+# /usr/lib/python-exec/python3.3/emerge -av portage
+# /usr/lib/python-exec/python3.3/emerge -av python-exec
+<</code>>

@@ -106,3 +106,9 @@ d = {}
 for k,v in l:
     d.setdefault(k,[]).append(v)
 <</code>>
+
+== Retuen a default value if None
+
+<<code python>>
+return x or 'default'
+<</code>>

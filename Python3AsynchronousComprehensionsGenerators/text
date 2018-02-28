@@ -1,0 +1,57 @@
+= Python3异步解析式/生成器
+
+**Python 3.6**添加了异步解析式[[https://www.python.org/dev/peps/pep-0530/|PEP 530]]和异步生成器[[https://www.python.org/dev/peps/pep-0525/|PEP 525]]
+
+
+== 异步解析式
+
+Example:
+<<code python>>
+result = [i async for i in aiter() if i % 2]
+<</code>>
+
+当然，所有解析式都支持##await##表达式
+<<code python>>
+import asyncio
+ 
+async def numbers(numbers):
+    for i in range(numbers):
+        yield i
+        await asyncio.sleep(0.5)
+ 
+async def main():
+    odd_numbers = [i async for i in numbers(10) if i % 2]
+    print(odd_numbers)
+ 
+if __name__ == '__main__':
+    event_loop = asyncio.get_event_loop()
+    try:
+        event_loop.run_until_complete(main())
+    finally:
+        event_loop.close()
+<</code>>
+
+== 异步生成器
+
+<<code python>>
+async def ticker(delay, to):
+    for i in range(to):
+        yield i
+        await asyncio.sleep(delay)
+
+
+async def run():
+    async for i in ticker(1, 10):
+        print(i)
+
+
+import asyncio
+loop = asyncio.get_event_loop()
+try:
+    loop.run_until_complete(run())
+finally:
+    loop.close()
+<</code>>
+
+
+Ref: [[http://www.blog.pythonlibrary.org/2017/02/14/whats-new-in-python-asynchronous-comprehensions-generators/|What’s New in Python: Asynchronous Comprehensions / Generators]]

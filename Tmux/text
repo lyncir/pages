@@ -4,3 +4,15 @@ Ctrl-a % 垂直分割
 Ctrl-a "  水平分割
 Ctrl-a c 创建
 Ctrl-a num 跳转
+
+== screen
+
+<<code bash>>
+$ screen -S xxx
+# C-a d 暂时退出
+$ screen -ls
+There is a screen on:
+        16582.pts-1.tivf06      (Detached)
+1 Socket in /tmp/screens/S-root.
+$ screen -r 16582
+<</code>>

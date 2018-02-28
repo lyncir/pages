@@ -1,0 +1,51 @@
+= Python 3 解包概括
+
+根据[[https://www.python.org/dev/peps/pep-0448/|PEP448]]文档, 主要扩宽了##*##可迭代对象解包操作符和##**##字典对象解包操作符的使用限制，使得它们可以出现在更多的地方，更多的情景，而且没有使用次数限制。
+<<code python>>
+>>> my_dict = {'1':'one', '2':'two'}
+>>> dict(**my_dict, w=6)
+{'1': 'one', '2': 'two', 'w': 6}
+>>> dict(**my_dict, w='three', **{'4':'four'})
+{'1': 'one', '2': 'two', 'w': 'three', '4': 'four'}
+<</code>>
+
+有趣的是，如果keys为非字符串，解包就不能工作。
+<<code python>>
+>>> my_dict = {1:'one', 2:'two'}
+>>> dict(**my_dict)
+Traceback (most recent call last):
+  File "<pyshell#27>", line 1, in <module>
+    dict(**my_dict)
+TypeError: keyword arguments must be strings
+<</code>>
+
+主要原因是其调用函数(比如##dict()##),如果是用##dict##语法的话就没问题
+<<code python>>
+>>> {**{1: 'one', 2:'two'}, 3:'three'}
+{1: 'one', 2: 'two', 3: 'three'}
+<</code>>
+
+还有一点就是相同##key##的情况下，后面的值会覆盖前面的值
+<<code python>>
+>>> {**{'x': 2}, 'x': 1}
+{'x': 1}
+<</code>>
+
+同样，这个功能在##tuple##和##list##下也是可以工作的
+<<code python>>
+>>> my_tuple = (11, 12, 45)
+>>> my_list = ['something', 'or', 'other']
+>>> my_range = range(5)
+>>> combo = [*my_tuple, *my_list, *my_range]
+>>> combo
+[11, 12, 45, 'something', 'or', 'other', 0, 1, 2, 3, 4]
+<</code>>
+
+上述操作在python2需要这样：
+<<code python>>
+>>> combo = list(my_tuple) + list(my_list) + list(my_range)
+[11, 12, 45, 'something', 'or', 'other', 0, 1, 2, 3, 4]
+<</code>>
+
+
+Ref: [[http://www.blog.pythonlibrary.org/2017/02/21/python-3-unpacking-generalizations/|Python 3 – Unpacking Generalizations]]

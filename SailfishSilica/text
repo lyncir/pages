@@ -1,0 +1,136 @@
+= Sailfish Silica
+
+== 介绍
+
+=== 一个简单的sailfish应用UI
+
+Example1:
+<<code qml>>
+import QtQuick 2.2
+import Sailfish.Silica 1.0
+
+ApplicationWindow {
+    initialPage: Component {
+        Page {
+            Label {
+                text: "Hello world!"
+                anchors.centerIn: parent
+            }
+        }
+    }
+}
+<</code>>
+
+1. 导入##QtQuick##和##Sailfish.Silica##以使用它们的QML类
+2. 声明Silica ##ApplicationWindow## 作为顶级组件
+3. 初始显示##Page##和##Label##
+
+##ApplicationWindow##是所有的Sailfish应用的顶级类.这个窗口包含应用UI,每个窗口都有##page stack##来显示当前屏幕.##initialPage##属性也可以是QML文件的URL,或者顶级##Page##的##Component##
+
+=== Sailfish UI 样式
+
+Example2:
+<<code qml>>
+import QtQuick 2.2
+import Sailfish.Silica 1.0
+
+ApplicationWindow {
+    initialPage: Component {
+        Page {
+            Column {
+                width: parent.width
+
+                // an interactive slider with a 0-100 range that steps by 1 when slided.
+                Slider {
+                    id: slider
+                    label: "A simple slider"
+                    width: parent.width
+                    minimumValue: 0; maximumValue: 100; stepSize: 1
+                    valueText: value
+                }
+
+                Button {
+                    text: "Save"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        listModel.append({"sliderValue": "Value: " + slider.value})
+                    }
+                }
+
+                Repeater {
+                    model: ListModel { id: listModel }
+
+                    Label { text: model.sliderValue }
+                }
+            }
+        }
+    }
+}
+<</code>>
+
+{{SailfishSilica/uploads/example2.png}}
+
+1. 使用Silica ##Slider##显示一条横向滑动条
+2. 使用Silica ##Button##展示一个按钮
+3. Silica ##Lable##显示一些文本
+
+=== ListItem
+
+Example3:
+<<code qml>>
+Repeater {
+    model: ListModel { id: listModel }
+
+    ListItem {
+        width: parent.width
+
+        Label {
+            text: model.sliderValue
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        menu: ContextMenu {
+            MenuItem {
+                text: "Remove"
+                onClicked: {
+                    listModel.remove(model.index)
+                }
+            }
+        }
+    }
+}
+<</code>>
+
+{{SailfishSilica/uploads/example3.png}}
+
+Silica ##ListItem##为列表提供标准的UI组件,可选项##ContextMenu##提供上下文菜单
+
+Example4:
+<<code qml>>
+Repeater {
+    model: ListModel { id: listModel }
+
+    ListItem {
+        id: listEntry    // add an id so this can be referenced from onClicked() below
+        width: parent.width
+
+        Label {
+            text: model.sliderValue
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        menu: ContextMenu {
+            MenuItem {
+                text: "Remove"
+                onClicked: {
+                    listEntry.remorseAction("Deleting", function() { listModel.remove(model.index) })
+                }
+            }
+        }
+    }
+}
+<</code>>
+
+{{SailfishSilica/uploads/example4.png}}
+
+ ##RemorseItem##和##RemorsePopup##可以做出撤销.但在##ListItem##中可以不用他们,##ListItem##的##remorseAction()##就可以做到

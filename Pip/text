@@ -18,3 +18,8 @@ $ pip install xxx -i http://pypi.douban.com/simple/
 <<code bash>>
 $ pip install 'Twisted<12.0'
 <</code>>
+
+4. 修改缓存路径
+<<code bash>>
+$ pip install -r requirements.txt --cache-dir /tmp/.cache/pip
+<</code>>

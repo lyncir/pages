@@ -6,11 +6,39 @@
 # Twisted
 # Explore Flask [[https://exploreflask.com/index.html]]
 # [[http://www.linuxtopia.org/online_books/programming_books/python_programming/index.html]]
+# [[https://www.dropbox.com/download?full=1&plat=win|Dropbox for Windows]]
+# [[Todo/uploads/Annabelle.mp3 | test music Annabelle.mp3]]
+# [[Todo/uploads/11月の雨_-_CHiCO_with_HoneyWorks.mp3 | music test]]
 
+== 高级python
 
-== work
+* Decorators/closures
+* generators
+* list comprehensions,
+* protocols
+* metaprogramming
+* concurrency perhaps
+* regex
+* multithreading
+* multiprocessing
+* mutex
+* map
+* filter
+* lambda
 
-* [[http://192.168.1.17:8100/index.html|API Doc]]
-* [[https://192.168.1.14/svn/games2/Qing2/|svn co]]
-* [[https://tower.im/teams/44f684e540744fad9c7bdcd898f40caf/projects/ | tower.im]]
+== bpi-m3
 
+* bpi-bootsel
+* [[http://linux-sunxi.org/Bootable_SD_card#Bootloader|Bootable SD card]]
+
+== 动漫
+
+* 千年女优
+* 红辣椒
+
+== redshift
+
+<<code bash>>
+# 設定白天色溫 5800K / 夜間色溫 4600K, 緯度 24° 經度 118°, Red Gamma 調降 10%, 背景執行
+$ redshift -t 5800:4600 -l 24.46:118.1 -g 0.9:1:1 &
+<</code>>

@@ -1,0 +1,19 @@
+= FreeBSD
+
+== 配置 
+
+##/etc/make.conf##
+<<code bash>>
+# 默认编译选项，不用手动交互
+BATCH=1
+
+# 使用axel代替fetch
+FETCH_CMD=axel
+FETCH_BEFORE_ARGS=-n 4 -a
+FETCH_AFTER_ARGS=
+DISABLE_SIZE=yes
+
+# 备用镜像站点
+#MASTER_SITE_BACKUP?=http://mirrors.ustc.edu.cn/freebsd/distfiles/${DIST_SUBDIR}/
+#MASTER_SITE_OVERRIDE?=${MASTER_SITE_BACKUP}
+<</code>>

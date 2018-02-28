@@ -44,6 +44,31 @@ $ git clean -f -X
 $ git clean -f -x
 <</code>>
 
+5. 对上一次的提交做修改
+
+<<code bash>> 
+$ git commit --amend -am "test"
+<</code>>
+
+6. 查看已提交的diff
+
+<<code bash>>
+$ git diff COMMIT^!
+<</code>>
+
+7. 撤销merge
+
+<<code bash>>
+$ git checkout <merge所在的分支>
+$ git reset --hard HEAD~1
+<</code>>
+
+8. 撤销某次提交
+<<code bash>>
+git revert --strategy resolve <commit>
+<</code>>
+
+
 == 项目开发流程
 
 <<code bash>>
@@ -92,4 +117,10 @@ $ git svn rebase
 
 # 推送到远程svn服务器
 $ git svn dcommit
+<</code>>
+
+== git 存储验证
+
+<<code bash>>
+$ git config --global credential.helper wincred
 <</code>>
