@@ -1,0 +1,48 @@
+= sysbench
+
+== 选项 options
+
+mysql相关的选项
+<<code>>
+--db-driver=mysql             # 数据库类型
+--mysql-host=localhost        # 数据库主机
+--mysql-port=3306             # 数据库端口
+--mysql-user=root             # 登录名
+--mysql-password=Root@1234    # 登录密码
+--mysql-db=test               # 测试数据库名称
+<</code>>
+
+
+== 测试名 testname
+
+oltp相关的测试
+
+* oltp_common.lua
+* oltp_delete.lua
+* oltp_insert.lua
+* oltp_point_select.lua
+* oltp_read_only.lua
+* oltp_read_write.lua
+* oltp_update_index.lua
+* oltp_update_non_index.lua
+* oltp_write_only.lua
+
+
+
+== 命令command
+
+* prepare
+* run
+* cleanup
+* help
+
+
+== Examples
+
+<<code bash>>
+$ sysbench --db-driver=mysql --mysql-host=localhost --mysql-port=3306 --mysql-user=root --mysql-password='' --mysql-db=test  oltp_read_only prepare
+
+$ sysbench --db-driver=mysql --mysql-host=localhost --mysql-port=3306 --mysql-user=root --mysql-password='' --mysql-db=test oltp_read_only run
+
+$ sysbench --db-driver=mysql --mysql-host=localhost --mysql-port=3306 --mysql-user=root --mysql-password='' --mysql-db=test oltp_read_only cleanup
+<</code>>

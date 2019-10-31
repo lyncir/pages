@@ -14,7 +14,7 @@ Mock.__init__(self, spec=None, side_effect=None, return_value=sentinel.DEFAULT, 
 设置Mock的属性
 <<code python>>
 fooSpec = ["_fooValue", "callFoo", "doFoo"]
-mockFoo = Mock(spec = fooSpec)
+mockFoo = Mock(spec=fooSpec)
 
 # or
 class Foo(object):
@@ -25,13 +25,51 @@ class Foo(object):
     
     def doFoo(self, argValue):
         print "Foo:doFoo:input = ", argValue    
-mockFoo = Mock(spec = Foo)
+mockFoo = Mock(spec=Foo)
 <</code>>
 
-3. return_value
+3. side_effect
+返回结果时覆盖return_value
+<<code python>>
+# The mock object
+class Foo(object):
+    # instance properties
+    _fooValue = 123
+    
+    def callFoo(self):
+        print "Foo:callFoo_"
+    
+    def doFoo(self, argValue):
+        print "Foo:doFoo:input = ", argValue
+
+# creating the mock object (with a side effect)
+fooObj = Foo()
+
+fooList = [665, 666, 667]
+mockFoo = Mock(return_value=fooObj, side_effect=fooList)
+
+fooTest = mockFoo()
+print fooTest
+# returns 665
+
+fooTest = mockFoo()
+print fooTest
+# returns 666
+
+fooTest = mockFoo()
+print fooTest
+# returns 667
+
+fooTest = mockFoo()
+print fooTest
+# raises: StopIteration
+<</code>>
+
+
+4. return_value
 被调用时的返回
 <<code python>>
-mockFoo = Mock(return_value = 456)
+mockFoo = Mock(return_value=456)
 # <Mock id='2787568'>
 
 mockObj = mockFoo()
@@ -57,7 +95,7 @@ fooObj = Foo()
 print fooObj
 # returns: <__main__.Foo object at 0x68550>
 
-mockFoo = Mock(return_value = fooObj)
+mockFoo = Mock(return_value=fooObj)
 print mockFoo
 # returns: <Mock id='2788144'>
 
@@ -76,42 +114,23 @@ mockObj.doFoo("narf")
 <Mock id='428560'>
 <</code>>
 
-4. side_effect
-返回结果时覆盖return_value
+
+5. 修改类函数返回值
+
 <<code python>>
-# The mock object
-class Foo(object):
-    # instance properties
-    _fooValue = 123
-    
-    def callFoo(self):
-        print "Foo:callFoo_"
-    
-    def doFoo(self, argValue):
-        print "Foo:doFoo:input = ", argValue
+fooSpec = ["_fooValue", "callFoo", "doFoo"]
+mockFoo = Mock(spec=fooSpec)
 
-# creating the mock object (with a side effect)
-fooObj = FooSpec()
+fooTest1 = mockFoo()
+fooTest1.callFoo.return_value = "Foo:callFoo_1"
+print fooTest1.callFoo()
+# return Foo:callFoo_1
 
-fooList = [665, 666, 667]
-mockFoo = Mock(return_value = fooObj, side_effect = fooList)
-
-fooTest = mockFoo()
-print fooTest
-# returns 665
-
-fooTest = mockFoo()
-print fooTest
-# returns 666
-
-fooTest = mockFoo()
-print fooTest
-# returns 667
-
-fooTest = mockFoo()
-print fooTest
-# raises: StopIteration
+fooTest2 = mockFoo()
+print fooTest2.callFoo()
+# return Foo:callFoo_1
 <</code>>
+
 
 == Example
 

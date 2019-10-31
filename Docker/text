@@ -1,0 +1,76 @@
+= Docker 学习
+
+
+== 基础命令
+
+<<code bash>>
+# 获取镜像
+$ docker pull NAME[:TAG]
+$ docker pull ubuntu:16.04
+
+# 运行镜像
+$ docker run -it --rm ubuntu:16.04 bash
+-i: 交互
+-t: 终端
+--rm: 容器退出后随之将其删除
+
+# 查看镜像
+$ docker images NAME[:TAG]
+$ docker images ubuntu:16.04
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              16.04               f975c5035748        5 weeks ago         112.4 MB
+
+# 删除本地镜像
+$ docker rmi IMAGE
+IMAGE: NAME[:TAG] | IMAGE ID
+$ docker rmi ubuntu:16.04
+# OR
+$ docker rmi f975c5035748
+
+# 查看已启动的容器
+$ docker ps
+# 查看所有容器
+$ docker ps -a
+
+# 删除容器
+$ docker rm CONTAINER ID | NAMES
+$ docker rm 33b8cf3a1a8b
+# OR
+$ docker rm lyncir-test
+<</code>>
+
+== 使用Dockerfile定制镜像
+
+* 注意每一层应该如何构建,并清理无关文件
+* 数据层不应该放在容器中
+
+
+<<code bash>>
+# 构建镜像
+$ docker build -t NAME[:TAG] .
+$ docker build -t fpm:1.0.0 .
+<</code>>
+
+=== Dockerfile指令
+
+* COPY 从构建上下文复制到镜像内。能用COPY用COPY，自动解压才用ADD
+* CMD 容器启动命令。指定默认的容器主进程的启动命令。容器中的应用应该都以前台运行
+* ENTRYPOINT 入口点。于CMD类似，主要用于传参
+* ENV 环境变量。
+* VOLUME 定义匿名卷
+
+
+=== Dockfile Example
+
+<<code>>
+FROM ubuntu:16.04
+RUN sed -i 's#http://archive.ubuntu.com#http://mirrors.163.com#g' /etc/apt/sources.list \
+	&& buildDeps='ruby ruby-dev rubygems build-essential rpm ssh' \
+	&& apt-get -y update \
+	&& apt-get install -y $buildDeps \
+	&& rm -rf /var/lib/apt/lists/*
+RUN gem install --no-ri --no-rdoc fpm
+ENV APP_ROOT=/data
+WORKDIR $APP_ROOT
+COPY . $APP_ROOT
+<</code>>

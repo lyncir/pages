@@ -1,6 +1,6 @@
 = FreeBSD
 
-== 配置 
+== 配置
 
 ##/etc/make.conf##
 <<code bash>>
@@ -14,6 +14,101 @@ FETCH_AFTER_ARGS=
 DISABLE_SIZE=yes
 
 # 备用镜像站点
-#MASTER_SITE_BACKUP?=http://mirrors.ustc.edu.cn/freebsd/distfiles/${DIST_SUBDIR}/
+#MASTER_SITE_BACKUP?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/
 #MASTER_SITE_OVERRIDE?=${MASTER_SITE_BACKUP}
+<</code>>
+
+
+##/etc/rc.conf##
+<<code bash>>
+# 重启/tmp目录
+clear_tmp_enable="YES"
+# 主机名
+hostname="lnas"
+# 静态ip和路由
+ifconfig_em0="inet 192.168.7.10 netmask 255.255.255.0"
+defaultrouter="192.168.7.1"
+# 启动ssh服务
+sshd_enable="YES"
+<</code>>
+
+== 基础命令
+
+=== bsd
+
+<<code bash>>
+# bsdinstall
+# bsdconfig
+<</code>>
+
+=== 启动服务
+
+<<code bash>>
+service mysql-server onestart
+<</code>>
+
+=== 查看监听端口
+
+<<code bash>>
+# sockstat -4
+USER     COMMAND    PID   FD PROTO  LOCAL ADDRESS         FOREIGN ADDRESS
+mysql    mysqld     37964 29 tcp4   127.0.0.1:3306        *:*
+www      nginx      31689 6  tcp4   *:80                  *:*
+<</code>>
+
+=== 包管理
+
+<<code bash>>
+# 查看已安装的包
+pkg info
+
+# 搜索
+cd /usr/ports
+make search name=zsh
+
+# 安装
+cd /usr/ports/shells/zsh
+make clean install
+
+# 删除
+cd /usr/ports/shells/zsh
+make deinstall
+<</code>>
+
+=== 磁盘操作
+
+<<code bash>>
+# 查看分区
+gpart show
+=>       40  976773088  ada0  GPT  (466G)
+         40       1024     1  freebsd-boot  (512K)
+       1064  419430400     2  freebsd-ufs  (200G)
+  419431464  524288000     3  freebsd-ufs  (250G)
+  943719464   33053664     4  freebsd-swap  (16G)
+
+=>        40  3907029088  ada1  GPT  (1.8T)
+          40  3907029088        - free -  (1.8T)
+<</code>>
+
+=== 设置终端显示中文
+
+<<code bash>>
+# vim /etc/login/conf
+default:\
+    ...
+    :lang=en_US.UTF-8:\
+    :setenv=LC_CTYPE=zh_CN.UTF-8,LC_COLLATE=C:\
+    :charset=UTF-8:\
+    ...
+
+# cap_mkdb /etc/login.conf
+<</code>>
+
+=== 关机重启
+
+<<code bash>>
+# 关闭系统并关闭电源
+shutdown -p now
+# 重启
+shutdown -r now
 <</code>>

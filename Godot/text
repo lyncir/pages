@@ -1,0 +1,30 @@
+= Godot
+
+== 学习
+
+=== 显示fps帧数
+
+主要用`Engine.get_frames_per_second()`来获取帧数
+
+把它放在窗口标题栏
+<<code>>
+extends Node
+
+var title = "Game v0.1"
+
+func _process(delta):
+    OS.set_window_title(title + " | fps: " + str(Engine.get_frames_per_second()))
+<</code>>
+
+
+把它放在2D viewport
+<<code>>
+extends Label
+    
+onready var OtherNode = get_node("Path/To/Other/Node")
+
+func _process(delta):
+    text = ""
+    text += "fps: " + str(Engine.get_frames_per_second())
+    text += "other variable: " + str(OtherNode.variable)
+<</code>>

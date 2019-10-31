@@ -8,6 +8,17 @@
 # useradd -m -G users,wheel,audio username
 <</code>>
 
+=== 静态ip
+
+<<code bash>>
+# cat /etc/conf.d/net
+config_enp0s3="192.168.1.10/24"
+routes_enp0s3="default via 192.168.1.1"
+dns_servers_enp0s3="192.168.1.1"
+
+# ln -s net.lo net.enp0s3
+<</code>>
+
 === 时区
 
 <<code base>>
@@ -80,6 +91,7 @@ LC_CTYPE=zh_CN.UTF-8
 === 没有pip3.6
 
 <<code bash>>
+# python3.6 -m ensurepip
 # wget https://bootstrap.pypa.io/get-pip.py
 # python3.6 get-pip.py
 <</code>>
@@ -89,4 +101,28 @@ LC_CTYPE=zh_CN.UTF-8
 <<code bash>>
 # /usr/lib/python-exec/python3.3/emerge -av portage
 # /usr/lib/python-exec/python3.3/emerge -av python-exec
+<</code>>
+
+=== Swap Caps_Lock and Control_L
+
+<<code bash>>
+
+# vim ~/.xmodmap
+!
+! Swap Caps_Lock and Control_L
+!
+remove Lock = Caps_Lock
+remove Control = Control_L
+keysym Control_L = Caps_Lock
+keysym Caps_Lock = Control_L
+add Lock = Caps_Lock
+add Control = Control_L
+
+# xmodmap ~/.xmodmap
+<</code>>
+
+=== python error
+
+<<code bash>>
+# /usr/lib/python-exec/python2.7/emerge --oneshot python-exec
 <</code>>

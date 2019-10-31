@@ -2,6 +2,10 @@
 
 1. 版本号比较
 
+主版本+稳定版本+修复版本
+
+eg. 1.4.0
+
 <<code python>>
 # -*- coding: utf-8 -*-
 
@@ -66,8 +70,16 @@ print sorted(a, key=lambda n: d.get(n[1]))
 4. 分割列表
 
 <<code python>>
+# 让每个块拥有n个元素
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
+    for i in xrange(0, len(l), n):
+        yield l[i:i+n]
+
+
+# 或者让一共有m块，自动分（尽可能平均）
+def chunks(l, m):
+    n = int(math.ceil(len(l) / float(m)))
     for i in xrange(0, len(l), n):
         yield l[i:i+n]
 <</code>>
@@ -143,4 +155,24 @@ from collections import defaultdict
 
 a = defaultdict(lambda: [0, 0.0])
 a['test'][0] += 5
+<</code>>
+
+
+9. 列表相加
+<<code python>>
+
+In [2]: l = [[3,7,2],[1,4],[9,8,7,10]]
+In [6]: map(sum,zip(*l))
+Out[6]: [13, 19, 14]
+<</code>>
+
+
+非等长列表将补0
+<<code python>>
+In [1]: import itertools
+
+In [2]: l = [[3,7,2],[1,4],[9,8,7,10]]
+
+In [3]: [sum(i) for i in itertools.izip_longest(*l, fillvalue=0)]
+Out[3]: [13, 19, 9, 10]
 <</code>>

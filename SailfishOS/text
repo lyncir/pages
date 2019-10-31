@@ -104,3 +104,7 @@ $ devel-su               ## Use your SSH password here
 or
 # zypper -v ref -f
 <</code>>
+
+== 构建sailfish os
+
+[[SailfishXA2BuildAndFlash | Sailfish XA2 Build And Flash]]

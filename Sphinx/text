@@ -1,0 +1,92 @@
+= Sphinx
+
+== 安装
+
+<<code bash>>
+$ pip install sphinx
+<</code>>
+
+
+== 使用
+
+<<code bash>>
+$ sphinx-quickstart
+<</code>>
+
+
+== 配置
+
+1. ##index.rst## 主页
+2. ##conf.py## 配置文件
+
+<<code python>>
+# 一般文档位于docs，需要载入模块
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+<</code>>
+
+
+== reStructuredText
+
+
+=== 内联标记
+
+<<code rst>>
+*emphasis* 斜体
+**strong** 粗体
+``literal`` 代码样式
+<</code>>
+
+
+=== 列表与引用
+
+<<code rst>>
+* 这是一个项目符号列表.
+* 它有两项，
+  第二项使用两行.
+
+1. 这是个有序列表.
+2. 也有两项.
+
+#. 是个有序列表.
+#. 也有两项.
+
+* 这是
+* 一个列表
+
+  * 嵌套列表
+  * 子项
+
+* 父列表继续
+<</code>>
+
+
+=== 源代码
+
+<<code rst>>
+这是一段正常文本. 下一段是代码文字::
+
+   它不需要特别处理，仅是
+   缩进就可以了.
+
+   它可以有多行.
+
+再是正常的文本段.
+<</code>>
+
+
+=== 超链接
+
+<<code rst>>
+段落里包含 `a link`_.
+
+.. _a link: http://example.com/
+<</code>>
+
+
+== 拓展autodoc
+
+<<code rst>>
+.. autoclass:: Noodle
+<</code>>

@@ -1,0 +1,33 @@
+= Linux配置
+
+
+== 常用配置
+
+
+=== 调整屏幕
+
+* redshift
+
+<<code bash>>
+# 設定白天色溫 5800K / 夜間色溫 4600K, 緯度 24° 經度 118°, Red Gamma 調降 10%, 背景執行
+redshift -t 5800:4600 -l 24.46:118.1 -g 0.9:1:1
+<</code>>
+
+
+=== 挂载windows共享目录
+
+<<code bash>>
+mount -t cifs -o username=<username>,password=<password> //192.168.7.10/Share /media/windows
+<</code>>
+
+
+=== 挂载手机mtp
+
+* jmtpfs
+
+<<code bash>>
+# 列出可用的mtp设备
+jmtpfs -l
+# 挂在mtp
+jmtpfs /media/mtp
+<</code>>

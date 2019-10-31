@@ -1,0 +1,14 @@
+= wrk
+
+== Example
+
+=== POST Json
+
+<<code bash>>
+# wrk -t1 -c1 -d1s -s post.lua http://localhost:8000/
+
+# cat post.lua
+wrk.method = "POST"
+wrk.body = '{"user": "alulu"}'
+wrk.headers["Content-Type"] = "application/json"
+<</code>>
