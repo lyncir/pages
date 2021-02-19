@@ -1,0 +1,13 @@
+= Iptables
+
+1. 禁止某个ip地址的网络连接
+
+<<code bash>>
+iptables -I INPUT -s ***.***.***.*** -j DROP
+<</code>>
+
+解封:
+
+<<code bash>>
+iptables -D INPUT -s ***.***.***.*** -j DROP
+<</code>>

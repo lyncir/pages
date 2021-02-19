@@ -1,0 +1,37 @@
+= Tc
+
+
+1. 弱网测试相关
+
+<<code bash>>
+# 将mangle表里的规则清空
+iptables -t mangle -F OUTPUT
+
+# 给OUTPUT链的mangle表添加规则：将从22.22.22.22发到本地bond0端口的请求这是标记0x1。
+iptables -t mangle -A OUTPUT -d 192.168.5.30 -o eth0 -j MARK --set-mark 0x1
+
+# 清空 eth0网卡根目录的队列规则
+tc qdisc del dev eth0 root
+
+# 给eth0网卡添加根节点队列规则，规则类型为htb(层级令牌桶），名称为“1：”
+tc qdisc add dev eth0 root handle 1: htb
+
+# 给根节点添加名称为“1：1”的类， 类型为htb(层级令牌桶），带宽为20000Mbit/second
+tc class add dev eth0 parent 1: classid 1:1 htb rate 20000Mbit
+
+# 在名称为“1：1”的类上，添加队列规则，使用netem命令设置丢包率为50%。+-2%
+#tc qdisc add dev eth0 parent 1:1 netem loss 50% 2%
+
+# 在名称为“1：1”的类上，添加队列规则，使用netem命令设置时延100ms +- 20ms
+tc qdisc add dev eth0 parent 1:1 netem delay 500ms 20ms
+
+# 在“1：”的队列规则上设置凡是被标记有0x1的数据经过该规则时，优先级为1（0最高，最低为7），将由类“1：1”来处理，入口限流，带宽为20000Mbit，允许的突发数据为12000b.
+tc filter add dev eth0 protocol ip parent 1: prio 1 handle 0x1 fw  classid 1:1 police rate 20000Mbit burst 12000b drop
+
+# 显示eth0网卡上的过滤器信息
+tc filter show dev eth0
+# 显示eth0上的类信息
+tc class show dev eth0
+# 显示eth0上的队列信息
+tc qdisc show dev eth0
+<</code>>

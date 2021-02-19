@@ -23,3 +23,15 @@ $ pip install 'Twisted<12.0'
 <<code bash>>
 $ pip install -r requirements.txt --cache-dir /tmp/.cache/pip
 <</code>>
+
+5. 使用git资源
+
+ * 使用@可以指定commit哈希，分支名，tag，release
+ * 使用#指定包名
+
+<<code bash>>
+$ pip install git+git://github.com/path/to/package-two@41b95ec#egg=package-two
+
+$ cat requirements.txt
+-e git://github.com/path/to/package-two@41b95ec#egg=package-two
+<</code>>

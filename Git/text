@@ -68,6 +68,21 @@ $ git reset --hard HEAD~1
 git revert --strategy resolve <commit>
 <</code>>
 
+9. 批量删除本地分支
+<<code bash>>
+git branch | grep -v "feature/xxx" | grep -v "yyy" | xargs git branch -d
+<</code>>
+
+10. 撤销comit
+<<code bash>>
+git reset --soft HEAD^
+<</code>>
+
+11. 撤销add
+<<code bash>>
+git reset HEAD .
+<</code>>
+
 
 == 项目开发流程
 
